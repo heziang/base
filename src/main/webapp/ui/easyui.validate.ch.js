@@ -127,5 +127,11 @@ $.extend($.fn.validatebox.defaults.rules, {
                      }
                  },
                  message: '两次输入的密码不一致！'
+             },
+             char: {
+                 validator: function (value, param) {
+                	 return /[a-zA-Z0-9]*/.test(value);
+                 },
+                 message: '只能包含英文或数字'
              }
          }); 

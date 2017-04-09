@@ -11,14 +11,14 @@
     	<table>
     		<tr>
     			<td>用户名:</td>
-    			<td><input class="easyui-textbox" type="text" name="userid" required="true" data-options="disabled:true,validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="userid" required="true" data-options="editable:false,validType:['unnormal','length[0,50]']"></input></td>
     			<td>昵称:</td>
     			<td><input class="easyui-textbox" type="text" name="nickname" data-options="validType:['unnormal','length[0,50]']"></input></td>
     		</tr>
     		<tr>
     			<td>性别:</td>
     			<td>
-					<input id="sexcomb" class="easyui-combobox" style="width:100%;" name="sex" required="true" data-options="textField:'text',valueField:'value',url:'/dictionary/searchByTypecode/sex.htmls'">
+					<input id="sexcomb" class="easyui-combobox" style="width:100%;" name="sex" required="true" data-options="textField:'text',valueField:'value',url:'<%=getServletContext().getContextPath()%>/dictionary/searchByTypecode/sex.htmls'">
 				</td>
     			<td>姓名:</td>
     			<td><input class="easyui-textbox" data-options="validType:['name','length[0,10]']" type="text" name="username" required="true"></input></td>
@@ -49,7 +49,6 @@
 		});
 	
 		function updateSysUser(){
-			alert($("#editSysUserForm").serialize());
 			if($("#editSysUserForm").form('enableValidation').form('validate')){
 				$.ajax({
 		               type: "POST",
@@ -58,6 +57,7 @@
 		               success: function(data){
 		            	    $('#editUserWindow').window('close');
 							$('#userListTable').datagrid('reload');
+							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });
 			}

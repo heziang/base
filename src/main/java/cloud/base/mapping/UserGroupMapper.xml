@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.UserGroupMapper">
+	<resultMap id="SysResourceMap" type="cloud.base.model.UserGroup">
+		<id column="groupcode" property="groupcode" jdbcType="VARCHAR" />
+		<result column="groupname" property="groupname" jdbcType="VARCHAR" />
+		<result column="grouptype" property="grouptype" jdbcType="VARCHAR" />
+		<result column="pgroupcode" property="pgroupcode" jdbcType="VARCHAR" />
+		<result column="gorder" property="gorder" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="getListByPid" resultType="cloud.base.model.UserGroup" parameterType="java.lang.String">
+		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from user_group t 
+		where t.pgroupcode = #{pid,jdbcType=VARCHAR}
+	</select>
+	<select id="getUserGroupById" resultType="cloud.base.model.UserGroup" parameterType="java.lang.String">
+		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from user_group t 
+		where t.groupcode = #{id,jdbcType=VARCHAR}
+	</select>
+	<insert id="save" keyProperty="groupcode" parameterType="cloud.base.model.UserGroup" >
+	<!--添加记录
+		生成UUID的办法-->
+	 	<selectKey keyProperty="groupcode" resultType="String" order="BEFORE">
+	        select  replace(uuid(),'-','')   from dual
+	    </selectKey> 
+	    insert into user_group 
+	    	(groupcode, groupname, grouptype,pgroupcode,gorder) 
+	    values 
+	    	(
+		    	#{groupcode,jdbcType=VARCHAR},#{groupname,jdbcType=VARCHAR},
+		    	#{grouptype,jdbcType=VARCHAR},#{pgroupcode,jdbcType=VARCHAR},
+		    	#{gorder,jdbcType=VARCHAR}
+	    	);
+  	</insert>
+  	<update id="update" parameterType="cloud.base.model.UserGroup">
+	        update user_group t
+	        <set>
+	            <if test="groupname != null and groupname !=''">
+	            	groupname=#{groupname},
+	            </if>
+	            <if test="grouptype != null and grouptype !=''">
+	            	grouptype=#{grouptype},
+	            </if>
+	            <if test="pgroupcode != null and pgroupcode !=''">
+	            	pgroupcode=#{pgroupcode},
+	            </if>
+	            <if test="gorder != null and gorder !=''">
+	            	gorder=#{gorder},
+	            </if>
+	        </set>
+	        where t.groupcode = #{groupcode,jdbcType=VARCHAR}
+	</update>
+	<delete id="delete" parameterType="String">  
+        delete from user_group where groupcode in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+	</delete>  
+</mapper>

@@ -10,6 +10,7 @@
 	<script type="text/javascript" src="../ui/jquery.min.js"></script>
 	<script type="text/javascript" src="../ui/jquery.easyui.min.js"></script>
 	<script type="text/javascript" src="../ui/easyui.validate.ch.js"></script>
+	<script type="text/javascript" src="../ui/locale/easyui-lang-zh_CN.js"></script>
 	<title></title>
 </head>
 <body>

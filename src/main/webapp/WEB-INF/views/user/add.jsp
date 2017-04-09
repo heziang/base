@@ -11,20 +11,20 @@
     	<table>
     		<tr>
     			<td>用户名:</td>
-    			<td><input class="easyui-textbox" type="text" name="userid" required="true" data-options="validType:['username','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="userid" prompt="输入用户名" required="true" data-options="validType:['username','length[0,50]']"></input></td>
     			<td>昵称:</td>
     			<td><input class="easyui-textbox" type="text" name="nickname" data-options="validType:['unnormal','length[0,50]']"></input></td>
     		</tr>
     		<tr>
     			<td>密码:</td>
-    			<td><input class="easyui-passwordbox" id="pwd" name="pwd" prompt="Password" required="true" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-passwordbox" id="pwd" name="pwd" prompt="输入密码" required="true" data-options="validType:['unnormal','length[0,50]']"></input></td>
     			<td>确认密码:</td>
-    			<td><input class="easyui-passwordbox" id="pwdconfirm" prompt="Password" required="true" validtype="same['pwd']"></input></td>
+    			<td><input class="easyui-passwordbox" id="pwdconfirm" prompt="确认密码" required="true" validtype="same['pwd']"></input></td>
     		</tr>
     		<tr>
     			<td>性别:</td>
     			<td>
-					<input id="sexcomb" class="easyui-combobox" style="width:100%;" name="sex" required="true" data-options="textField:'text',valueField:'value',url:'/dictionary/searchByTypecode/sex.htmls'">
+					<input id="sexcomb" class="easyui-combobox" style="width:100%;" name="sex" required="true" data-options="textField:'text',valueField:'value',url:'<%=getServletContext().getContextPath() %>/dictionary/searchByTypecode/sex.htmls'">
 				</td>
     			<td>姓名:</td>
     			<td><input class="easyui-textbox" data-options="validType:['name','length[0,10]']" type="text" name="username" required="true"></input></td>
@@ -48,11 +48,11 @@
 	    </div>
 	</form>	
 	<script type="text/javascript">
+		
 		$(document).ready(function() {
 		});
 	
 		function saveSysUser(){
-			alert($("#addSysUserForm").serialize());
 			if($("#addSysUserForm").form('enableValidation').form('validate')){
 				$.ajax({
 		               type: "POST",
@@ -61,6 +61,7 @@
 		               success: function(data){
 		            	    $('#addUserWindow').window('close');
 							$('#userListTable').datagrid('reload');
+							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });
 			}

@@ -7,36 +7,45 @@
 <title>用户列表</title>
 </head>
 <body>
-	<div id="userListToolbar">
-		<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addUser()">增加</a>
-		<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
-		<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUsers()">删除</a>
-	</div>
 	
-	<table id="userListTable" toolbar="#userListToolbar" title="用户列表" style="height:100%">
-	</table>
-	
-	<div id="addUserWindow" class="easyui-window" title="增加用户" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
-	</div>
-	
-	<div id="editUserWindow" class="easyui-window" title="编辑用户" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+<div id="userlistlayout" class="easyui-layout" style="height:100%;">
+    <div data-options="region:'west',title:'用户组',split:true" style="width:20%;">
+		
+	<div id="usergrouptreepanel" class="easyui-panel" data-options="href:'<%=getServletContext().getContextPath() %>/usergroup/tree/0.htmls'">
 	</div>
 
-	
+				
+    </div>
+    <div data-options="region:'center'" data-options="hideCollapsedContent:true">
+	    <div id="userListToolbar">
+			<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addUser()">增加</a>
+			<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
+			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUsers()">删除</a>
+		</div>
+		
+		<table id="userListTable" toolbar="#userListToolbar" title="用户列表" style="height:100%" data-options=" url:'<%=getServletContext().getContextPath()%>/user/search/list.htmls',idField:'userid',pagination:true,singleSelect:true">>
+			<thead>
+            <tr>
+                <th data-options="field:'check',checkbox:true"></th>
+                <th data-options="field:'userid',width:'25%'">用户名</th>
+                <th data-options="field:'username',width:'25%'">姓名</th>
+                <th data-options="field:'mobilephone',width:'25%'">手机</th>
+                <th data-options="field:'telephone',width:'24%'">电话</th>
+            </tr>
+        </thead>
+			
+		</table>
+		
+		<div id="addUserWindow" class="easyui-window" title="增加用户" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+		</div>
+		
+		<div id="editUserWindow" class="easyui-window" title="编辑用户" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+		</div>
+    </div>
+</div>
 	<script type="text/javascript">
 		$(document).ready(function() {
-			$('#userListTable').datagrid({
-			    url:appName+'/user/search/list.htmls',
-			    pagination:true,
-			    idField:"userid",
-			    columns:[[
-			        {field:'check',checkbox:true},
-			        {field:'userid',title:'登录名',width:'25%'},
-			        {field:'username',title:'姓名',width:'25%'},
-			        {field:'mobilephone',title:'手机',width:'25%'},
-			        {field:'telephone',title:'电话',width:'24%'}
-			    ]]
-			});
+			$('#userListTable').datagrid();
 		});
 		
 		function addUser(){
@@ -62,15 +71,20 @@
 				ids += obj.userid+",";
 			});
 			if(ids.length>0&&ids.charAt(ids.length-1)==","){
-				ids = ids.substring(0, ids.length-1);
-				$.ajax({
-		               type: "POST",
-		               url: appName+"/user/delete.htmls",
-		               data: {userids:ids},
-		               success: function(data){
-							$('#userListTable').datagrid('reload');
-		                  }
-		            });
+				$.messager.confirm('操作确认','确认操作?',function(r){
+					if (r){
+						ids = ids.substring(0, ids.length-1);
+						$.ajax({
+				               type: "POST",
+				               url: appName+"/user/delete.htmls",
+				               data: {userids:ids},
+				               success: function(data){
+									$('#userListTable').datagrid('reload');
+									$.messager.alert('操作结果','操作成功');
+				                  }
+				            });
+					}
+				});
 			}else{
 				alert("请选择用户！");
 			}
