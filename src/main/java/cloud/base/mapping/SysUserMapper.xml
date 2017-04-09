@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.SysUserMapper">
+	<resultMap id="SysUserMap" type="cloud.base.model.SysUser">
+		<id column="userid" property="userid" jdbcType="VARCHAR" />
+		<result column="groupcode" property="groupcode" jdbcType="VARCHAR" />
+		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="loadUserById" resultMap="SysUserMap" parameterType="java.lang.String">
+		select
+		t.userid,t.pwd
+		from sys_user t
+		where t.userid = #{id,jdbcType=VARCHAR}
+	</select>
+	<!--添加记录
+		生成UUID的办法
+	 <selectKey keyProperty="userid" resultType="String" order="BEFORE">
+	        select  replace(uuid(),'-','')   from dual
+	    </selectKey> -->
+	<insert id="save" keyProperty="userid" parameterType="cloud.base.model.SysUser" >
+	    insert into sys_user 
+	    	(userid, groupcode, pwd) 
+	    values 
+	    	(#{userid,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR});
+  	</insert>
+  	
+	<update id="update" parameterType="cloud.base.model.SysUser">
+	        update sys_user t
+	        <set>
+	            <if test="pwd != null and pwd !=''">
+	            	pwd=#{pwd},
+	            </if>
+	        </set>
+	        where t.userid = #{userid,jdbcType=VARCHAR}
+	
+	</update>
+	<delete id="delete" parameterType="String">  
+        delete from sys_user where userid in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+	</delete>  
+</mapper>

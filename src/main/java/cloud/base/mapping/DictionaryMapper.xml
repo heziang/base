@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.DictionaryMapper">
+	<resultMap id="SysResourceMap" type="cloud.base.model.Dictionary">
+		<id column="dcode" property="dcode" jdbcType="VARCHAR" />
+		<result column="typecode" property="typecode" jdbcType="VARCHAR" />
+		<result column="dname" property="dname" jdbcType="VARCHAR" />
+		<result column="dorder" property="dorder" jdbcType="INTEGER" />
+	</resultMap>
+	<select id="getAllDictByTypecode" resultType="Map" parameterType="java.lang.String">
+		select t.dcode value,t.dname text from sys_data_dictionary t where t.typecode = #{typecode,jdbcType=VARCHAR}
+	</select>
+</mapper>

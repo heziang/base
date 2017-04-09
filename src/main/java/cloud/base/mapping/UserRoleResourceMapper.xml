@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.UserRoleResourceMapper">
+	<resultMap id="RoleRResourceMap" type="cloud.base.model.RoleRResource">
+		<result column="rolecode" property="rolecode" jdbcType="VARCHAR" />
+		<result column="resourcecode" property="resourcecode" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findAllResourcesByUserId" resultType="java.lang.String" parameterType="java.lang.String">
+		select rr.rolecode from sys_user u left join user_r_role urr on u.userid = urr.userid
+			left join sys_role rr on urr.rolecode = rr.rolecode
+			where u.userid = #{userid,jdbcType=VARCHAR}
+	</select>
+	<select id="findAllResources" resultType="Map">
+		select rr.rolecode,sr.resourcevalue from  sys_role rr 
+			left join role_r_resource rrr on rr.rolecode = rrr.rolecode
+			left join sys_resource sr on rrr.resourcecode = sr.resourcecode
+	</select>
+</mapper>

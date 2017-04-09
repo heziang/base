@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.UserinfoMapper">
+	<resultMap id="UserinfoMap" type="cloud.base.model.Userinfo">
+		<id column="userid" property="userid" jdbcType="VARCHAR" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="sex" property="sex" jdbcType="VARCHAR" />
+		<result column="post" property="post" jdbcType="VARCHAR" />
+		<result column="email" property="email" jdbcType="VARCHAR" />
+		<result column="mobilephone" property="mobilephone" jdbcType="VARCHAR" />
+		<result column="telephone" property="telephone" jdbcType="VARCHAR" />
+		<result column="nickname" property="nickname" jdbcType="VARCHAR" />
+	</resultMap>
+	<insert id="save" keyProperty="userid" parameterType="cloud.base.model.Userinfo" >
+	    insert into userinfo 
+	    	(userid, username, sex,post,email,mobilephone,telephone,nickname) 
+	    values 
+	    	(
+		    	#{userid,jdbcType=VARCHAR},#{username,jdbcType=VARCHAR},
+		    	#{sex,jdbcType=VARCHAR},#{post,jdbcType=VARCHAR},
+		    	#{email,jdbcType=VARCHAR},#{mobilephone,jdbcType=VARCHAR},
+		    	#{telephone,jdbcType=VARCHAR},#{nickname,jdbcType=VARCHAR}
+	    	);
+  	</insert>
+  	<update id="update" parameterType="cloud.base.model.Userinfo">
+	        update userinfo t
+	        <set>
+	            <if test="username != null and username !=''">
+	            	username=#{username},
+	            </if>
+	            <if test="sex != null and sex !=''">
+	            	sex=#{sex},
+	            </if>
+	            <if test="post != null and post !=''">
+	            	post=#{post},
+	            </if>
+	            <if test="email != null and email !=''">
+	            	email=#{email},
+	            </if>
+	            <if test="mobilephone != null and mobilephone !=''">
+	            	mobilephone=#{mobilephone},
+	            </if>
+	            <if test="telephone != null and telephone !=''">
+	            	telephone=#{telephone},
+	            </if>
+	            <if test="nickname != null and nickname !=''">
+	            	nickname=#{nickname},
+	            </if>
+	        </set>
+	        where t.userid = #{userid,jdbcType=VARCHAR}
+	</update>
+	<delete id="delete" parameterType="String">  
+        delete from userinfo where userid in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+	</delete>  
+	<select id="search" resultMap="UserinfoMap" parameterType="Map">
+		select
+		u.*
+		from sys_user t left join userinfo u
+		on t.userid = u.userid
+		<if test="userid!=null and userid!='' ">  
+           and t.userid like concat(concat('%', #{userid}),'%')   
+        </if>
+		<if test="groupcode!=null and groupcode!='' ">  
+           and t.groupcode like concat(concat('%', #{userid}),'%')   
+        </if>
+        <if test="start!=null and rows!=null">
+        	limit #{start}, #{rows}
+        </if>
+	</select>
+	
+	<select id="getTotal" resultType="String" parameterType="Map">
+		select count(*)
+		from sys_user t   left join userinfo u
+		on t.userid = u.userid
+		<if test="userid!=null and userid!='' ">  
+           and t.userid like concat(concat('%', #{userid}),'%')   
+        </if>
+		<if test="groupcode!=null and groupcode!='' ">  
+           and t.groupcode like concat(concat('%', #{userid}),'%')   
+        </if>
+	</select>
+	
+	<select id="getUserinfoById" resultMap="UserinfoMap" parameterType="java.lang.String">
+		select
+		t.userid, t.username, t.sex,t.post,t.email,t.mobilephone,t.telephone,t.nickname
+		from userinfo t
+		where t.userid = #{id,jdbcType=VARCHAR}
+	</select>
+</mapper>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.SysResourceMapper">
+	<resultMap id="SysResourceMap" type="cloud.base.model.SysResource">
+		<id column="resourcecode" property="resourcecode" jdbcType="VARCHAR" />
+		<result column="groupcode" property="groupcode" jdbcType="VARCHAR" />
+		<result column="resourcename" property="resourcename" jdbcType="VARCHAR" />
+		<result column="resourcetype" property="resourcetype" jdbcType="VARCHAR" />
+		<result column="resourcevalue" property="resourcevalue" jdbcType="VARCHAR" />
+		<result column="resourceorder" property="resourceorder" jdbcType="INTEGER" />
+	</resultMap>
+</mapper>

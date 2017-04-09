@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.SysRoleMapper">
+	<resultMap id="SysRoleMap" type="cloud.base.model.SysRole">
+		<id column="roleId" property="roleId" jdbcType="VARCHAR" />
+		<result column="groupcode" property="groupcode" jdbcType="VARCHAR" />
+		<result column="roleName" property="roleName" jdbcType="VARCHAR" />
+		<result column="roleorder" property="roleorder" jdbcType="INTEGER" />
+	</resultMap>
+</mapper>
