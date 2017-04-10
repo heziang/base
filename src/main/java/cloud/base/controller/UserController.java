@@ -35,12 +35,14 @@ public class UserController {
 	}
 	
 	@RequestMapping("/list")
-	public String list(ModelMap modelMap){
+	public String list(ModelMap modelMap,String groupcode){
+		modelMap.addAttribute("groupcode", groupcode);
 		return "/user/list";
 	}
 	
 	@RequestMapping("/search/list")
 	public @ResponseBody Map search(ModelMap modelMap,Integer page,Integer rows){
+		
 		Map conditions = new HashMap();
 		conditions.put("start", (page-1)*rows);
 		conditions.put("rows", rows);

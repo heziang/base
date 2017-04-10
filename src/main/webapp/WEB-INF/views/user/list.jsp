@@ -86,7 +86,7 @@
 					}
 				});
 			}else{
-				alert("请选择用户！");
+				$.messager.alert('提示','请选择用户.');
 			}
 		}
 	</script>

@@ -38,13 +38,12 @@
 		</table>
 		<div style="text-align:center;padding:5px">
 	    	<a class="easyui-linkbutton" onclick="updateSysUser()">保存</a>
-	    	<a class="easyui-linkbutton" onclick="closeWindow()">关闭</a>
+	    	<a class="easyui-linkbutton" onclick="closeEditUserWindow()">关闭</a>
 	    </div>
 	</form>	
 	<script type="text/javascript">
 		var info = <%=request.getAttribute("info") %>;
 		$(document).ready(function() {
-			
 			$('#editSysUserForm').form('load',info);
 		});
 	
@@ -63,7 +62,7 @@
 			}
 		}
 		
-		function closeWindow(){
+		function closeEditUserWindow(){
 			$('#editUserWindow').window('close');
 		}
 	</script>

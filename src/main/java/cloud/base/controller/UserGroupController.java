@@ -26,10 +26,10 @@ public class UserGroupController {
 	@Autowired
 	private  IUserGroupService usergroupservice;
 	
-	@RequestMapping("/searchByParent/{pid}")
-	private @ResponseBody List getListByPid(@PathVariable("pid") String pid){
- 		if(StringUtils.isEmpty(pid))pid = "0";
-		List<UserGroup> list = usergroupservice.getListByPid(pid);
+	@RequestMapping("/searchByParent")
+	private @ResponseBody List getListByPid(String id){
+ 		if(StringUtils.isEmpty(id))id = "0";
+		List<UserGroup> list = usergroupservice.getListByPid(id);
 		List<EasyUITreeVO> volist = new LinkedList<EasyUITreeVO>();
 		for (UserGroup userGroup : list) {
 			EasyUITreeVO vo = new EasyUITreeVO();
@@ -80,8 +80,8 @@ public class UserGroupController {
 	 * 删除方法
 	 */
 	@RequestMapping("/delete")
-	public @ResponseBody String delete(String userids){
-		usergroupservice.delete(userids.split(","));
+	public @ResponseBody String delete(String groupids){
+		usergroupservice.delete(groupids.split(","));
 		return null;
 	}
 }

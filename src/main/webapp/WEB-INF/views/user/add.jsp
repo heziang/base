@@ -44,7 +44,7 @@
 		</table>
 		<div style="text-align:center;padding:5px">
 	    	<a class="easyui-linkbutton" onclick="saveSysUser()">保存</a>
-	    	<a class="easyui-linkbutton" onclick="closeWindow()">关闭</a>
+	    	<a class="easyui-linkbutton" onclick="closeAddUserWindow()">关闭</a>
 	    </div>
 	</form>	
 	<script type="text/javascript">
@@ -67,7 +67,7 @@
 			}
 		}
 		
-		function closeWindow(){
+		function closeAddUserWindow(){
 			$('#addUserWindow').window('close');
 		}
 	</script>

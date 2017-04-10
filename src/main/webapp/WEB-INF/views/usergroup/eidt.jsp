@@ -7,8 +7,9 @@
 <title></title>
 </head>
 <body>
-	 <form id="addUserGroupForm">
-	 	<input type="hidden" id="pgroupcode" name="pgroupcode" value="<%= request.getAttribute("pid")%>"/>
+	 <form id="editUserGroupForm">
+	 	<input id="pgroupcode" type="hidden" name="pgroupcode"/>
+	 	<input type="hidden" name="groupcode"/>
     	<table>
     		<tr>
     			<td>分组名称:</td>
@@ -22,8 +23,8 @@
     		</tr>
 		</table>
 		<div style="text-align:center;padding:5px">
-	    	<a class="easyui-linkbutton" onclick="saveUserGroup()">保存</a>
-	    	<a class="easyui-linkbutton" onclick="closeAddUserGroupWindow()">关闭</a>
+	    	<a class="easyui-linkbutton" onclick="updateUserGroup()">保存</a>
+	    	<a class="easyui-linkbutton" onclick="closeEditUserGroupWindow()">关闭</a>
 	    </div>
 	</form>	
 	<script type="text/javascript">
@@ -33,22 +34,22 @@
 		});
 	
 		function saveUserGroup(){
-			if($("#addUserGroupForm").form('enableValidation').form('validate')){
+			if($("#editUserGroupForm").form('enableValidation').form('validate')){
 				$.ajax({
 		               type: "POST",
-		               url: appName+"/usergroup/save.htmls",
-		               data: $("#addUserGroupForm").serialize(),
+		               url: appName+"/usergroup/update.htmls",
+		               data: $("#editUserGroupForm").serialize(),
 		               success: function(data){
-		            	   $("#usergrouptree").tree("reload",node.target);
-		            	    $('#addUserGroupWindow').window('close');
+		            	    $("#usergrouptree").tree("reload",pgroupcode);
+		            	    $('#editUserGroupWindow').window('close');
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });
 			}
 		}
 		
-		function closeAddUserGroupWindow(){
-			$('#addUserGroupWindow').window('close');
+		function closeEditUserGroupWindow(){
+			$('#editUserGroupWindow').window('close');
 		}
 	</script>
 </body>

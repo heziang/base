@@ -7,7 +7,7 @@
 <title>userInfo</title>
 </head>
 <body>
-    <ul id="usergrouptree" class="easyui-tree" data-options="url:'<%=getServletContext().getContextPath() %>/usergroup/searchByParent/0.htmls',onBeforeExpand:loadChirldNode,onContextMenu: openOrgMenu">
+    <ul id="usergrouptree" class="easyui-tree" data-options="url:'<%=getServletContext().getContextPath() %>/usergroup/searchByParent.htmls',onClick:clickUserGroupTree,onContextMenu: openOrgMenu">
 	    
 	</ul>
 	<div id="orgrightmenu" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
@@ -26,11 +26,6 @@
 	    $(document).ready(function() {
 			
 		});
-	    function loadChirldNode(){
-	    	var node = $('#usergrouptree').tree('getSelected');
-	    	alert(node.id);
-	    	$('#usergrouptree').tree({url:appName+"/usergroup/searchByParent/"+node.id+".htmls"});
-	    }
 		function menuHandler(item){
 			switch(item.name){
 				case 'add':
@@ -71,6 +66,27 @@
 		}
 		
 		function deleteUserGroup(){
+			$.messager.confirm('操作确认','确认操作?',function(r){
+				if (r){
+					var node = $('#usergrouptree').tree('getSelected');
+					if(node.id){
+						$.ajax({
+				               type: "POST",
+				               url: appName+"/usergroup/delete.htmls",
+				               data: {groupids:node.id},
+				               success: function(data){
+				            	   $("#usergrouptree").tree("reload",node.target);
+									$.messager.alert('操作结果','操作成功');
+				                  }
+				            });
+					}else{
+						$.messager.alert('提示','获取数据错误');
+					}
+				}
+			});
+		}
+		
+		function clickUserGroupTree(node){
 			
 		}
 	</script>
