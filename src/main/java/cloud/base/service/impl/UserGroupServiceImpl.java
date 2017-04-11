@@ -38,6 +38,6 @@ public class UserGroupServiceImpl implements IUserGroupService {
 	}
 
 	public UserGroup getUserGroupById(String id) {
-		return null;
+		return usergroupmapper.getUserGroupById(id);
 	}
 }
