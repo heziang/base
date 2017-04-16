@@ -8,7 +8,8 @@
 </head>
 <body>
 	 <form id="editSysUserForm">
-    	<table>
+   		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>;">
+   		<table>
     		<tr>
     			<td>用户名:</td>
     			<td><input class="easyui-textbox" type="text" name="userid" required="true" data-options="editable:false,validType:['unnormal','length[0,50]']"></input></td>

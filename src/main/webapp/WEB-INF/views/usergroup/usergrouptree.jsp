@@ -85,10 +85,6 @@
 				}
 			});
 		}
-		
-		function clickUserGroupTree(node){
-			
-		}
 	</script>
 </body>
 </html>

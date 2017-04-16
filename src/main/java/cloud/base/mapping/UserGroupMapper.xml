@@ -16,6 +16,11 @@
 		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from user_group t 
 		where t.groupcode = #{id,jdbcType=VARCHAR}
 	</select>
+	<select id="groupIsHaschildren" resultType="int" parameterType="java.lang.String">
+		select count(*) 
+		from user_group t 
+		where t.pgroupcode = #{groupid,jdbcType=VARCHAR}
+	</select>
 	<insert id="save" keyProperty="groupcode" parameterType="cloud.base.model.UserGroup" >
 	<!--添加记录
 		生成UUID的办法-->

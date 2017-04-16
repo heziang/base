@@ -14,6 +14,7 @@ import cloud.base.dao.UserRoleResourceMapper;
 import cloud.base.dao.UserinfoMapper;
 import cloud.base.model.SysUser;
 import cloud.base.model.Userinfo;
+import cloud.base.model.VO.PageModel;
 import cloud.base.service.ISysUserService;
 
 @Transactional
@@ -66,5 +67,11 @@ public class SysUserServiceImpl implements ISysUserService {
 
 	public Userinfo getUserinfoById(String id) {
 		return userinfomapper.getUserinfoById(id);
+	}
+
+	public PageModel loadPageModel(PageModel pageModel) {
+		pageModel.getPageData().setTotal(this.getTotals(pageModel.getConditions()));
+		pageModel.getPageData().setRows(this.search(pageModel.getConditions()));
+		return pageModel;
 	}
 }

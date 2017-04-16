@@ -58,13 +58,16 @@
 	<select id="search" resultMap="UserinfoMap" parameterType="Map">
 		select
 		u.*
-		from sys_user t left join userinfo u
-		on t.userid = u.userid
+		from sys_user t left JOIN  userinfo u on t.userid = u.userid
+		where 1=1
 		<if test="userid!=null and userid!='' ">  
            and t.userid like concat(concat('%', #{userid}),'%')   
         </if>
+		<if test="username!=null and username!='' ">  
+           and u.username like concat(concat('%', #{username}),'%')   
+        </if>
 		<if test="groupcode!=null and groupcode!='' ">  
-           and t.groupcode like concat(concat('%', #{userid}),'%')   
+           and t.groupcode =  #{groupcode}
         </if>
         <if test="start!=null and rows!=null">
         	limit #{start}, #{rows}
@@ -72,14 +75,18 @@
 	</select>
 	
 	<select id="getTotal" resultType="String" parameterType="Map">
-		select count(*)
-		from sys_user t   left join userinfo u
-		on t.userid = u.userid
+		select
+		count(*)
+		from sys_user t left JOIN  userinfo u on t.userid = u.userid
+		where 1=1
 		<if test="userid!=null and userid!='' ">  
            and t.userid like concat(concat('%', #{userid}),'%')   
         </if>
+        <if test="username!=null and username!='' ">  
+           and u.username like concat(concat('%', #{username}),'%')   
+        </if>
 		<if test="groupcode!=null and groupcode!='' ">  
-           and t.groupcode like concat(concat('%', #{userid}),'%')   
+           and t.groupcode =  #{groupcode}
         </if>
 	</select>
 	

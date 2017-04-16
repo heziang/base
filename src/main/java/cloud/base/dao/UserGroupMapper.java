@@ -13,4 +13,5 @@ public interface UserGroupMapper {
 	void update(UserGroup ug);
 	void delete(String[] ids);
 	UserGroup getUserGroupById(String id);
+	int groupIsHaschildren(String groupid);
 }

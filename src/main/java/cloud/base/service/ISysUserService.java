@@ -5,6 +5,7 @@ import java.util.Map;
 
 import cloud.base.model.SysUser;
 import cloud.base.model.Userinfo;
+import cloud.base.model.VO.PageModel;
 
 public interface ISysUserService {
 	/**
@@ -37,7 +38,11 @@ public interface ISysUserService {
 	 * @return
 	 */
 	String getTotals(Map conditions);
-	
+	/**
+	 * 封装分页数据
+	 * @return
+	 */
+	PageModel loadPageModel(PageModel pageModel);
 	/**
 	 * @param u user对象  保存方法
 	 */

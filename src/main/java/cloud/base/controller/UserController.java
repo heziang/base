@@ -19,6 +19,8 @@ import com.alibaba.fastjson.JSONObject;
 import cloud.base.model.SessionUser;
 import cloud.base.model.SysUser;
 import cloud.base.model.Userinfo;
+import cloud.base.model.VO.PageData;
+import cloud.base.model.VO.PageModel;
 import cloud.base.service.ISysUserService;
 
 @Controller
@@ -41,21 +43,16 @@ public class UserController {
 	}
 	
 	@RequestMapping("/search/list")
-	public @ResponseBody Map search(ModelMap modelMap,Integer page,Integer rows){
+	public @ResponseBody PageData search(ModelMap modelMap,PageModel pageModel){
 		
-		Map conditions = new HashMap();
-		conditions.put("start", (page-1)*rows);
-		conditions.put("rows", rows);
-		String total = sysUserService.getTotals(conditions);
-		List list = sysUserService.search(conditions);
-		Map resMap = new HashMap();
-		resMap.put("total", total);
-		resMap.put("rows", list);
-		return resMap;
+		Map cond = pageModel.initPageModel();
+		sysUserService.loadPageModel(pageModel);
+		return pageModel.getPageData();
 	}
 	
-	@RequestMapping("/add")
-	public String add(ModelMap modelMap){
+	@RequestMapping("/add/{groupcode}")
+	public String add(ModelMap modelMap,@PathVariable("groupcode") String groupcode){
+		modelMap.addAttribute("groupcode",groupcode);
 		return "/user/add";
 	}
 	

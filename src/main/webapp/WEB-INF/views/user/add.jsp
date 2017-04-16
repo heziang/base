@@ -9,6 +9,7 @@
 <body>
 	 <form id="addSysUserForm">
     	<table>
+    		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>">
     		<tr>
     			<td>用户名:</td>
     			<td><input class="easyui-textbox" type="text" name="userid" prompt="输入用户名" required="true" data-options="validType:['username','length[0,50]']"></input></td>

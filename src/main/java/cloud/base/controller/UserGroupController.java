@@ -35,7 +35,13 @@ public class UserGroupController {
 			EasyUITreeVO vo = new EasyUITreeVO();
 			vo.setId(userGroup.getGroupcode());
 			vo.setText(userGroup.getGroupname());
-			vo.setState("closed");
+			int childrenNum = usergroupservice.groupIsHaschildren(userGroup.getGroupcode());
+			if(childrenNum==0){
+				vo.setState("open");
+			}else{
+				vo.setState("closed");
+			}
+			
 			volist.add(vo);
 		}
 		return volist;
@@ -47,9 +53,8 @@ public class UserGroupController {
 		return "/usergroup/add";
 	}
 	
-	@RequestMapping("/tree/{pid}")
-	public String tree(ModelMap modelMap,@PathVariable("pid") String pid){
-		modelMap.addAttribute("pid", pid);
+	@RequestMapping("/tree")
+	public String tree(){
 		return "/usergroup/usergrouptree";
 	}
 	
