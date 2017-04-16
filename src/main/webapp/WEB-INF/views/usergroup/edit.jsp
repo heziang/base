@@ -17,7 +17,9 @@
     		</tr>
     		<tr>
     			<td>类型:</td>
-    			<td><input class="easyui-textbox" type="text" name="grouptype" prompt="选择类型" required="true" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td>
+					<input class="easyui-combobox" style="width:100%;" name="grouptype" required="true" data-options="textField:'text',valueField:'value',url:'<%=getServletContext().getContextPath() %>/dictionary/searchByTypecode/userGroupType.htmls'">
+				</td>
     			<td>排序:</td>
     			<td><input class="easyui-textbox" type="text" name="gorder" prompt="输入排序值" data-options="validType:['unnormal','integer']"></input></td>
     		</tr>
