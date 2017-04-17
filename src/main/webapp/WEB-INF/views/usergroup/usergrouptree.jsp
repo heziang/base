@@ -15,7 +15,7 @@
    	    <div data-options="name:'edit',iconCls:'icon-edit'">编辑</div>
         <div data-options="name:'delete',iconCls:'icon-remove'">删除</div>
         <div class="menu-sep"></div>
-        <div data-options="name:'exit'">刷新</div>
+        <div data-options="name:'refresh'">刷新</div>
     </div>
     
     <div id="addUserGroupWindow" class="easyui-window" title="增加用户组" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
@@ -26,20 +26,13 @@
 	    $(document).ready(function() {
 			
 		});
+	    
 		function menuHandler(item){
 			switch(item.name){
-				case 'add':
-					addUserGroup();
-					break;
-				case 'edit':
-					editUserGroup();
-					break;
-				case 'delete':
-					deleteUserGroup();
-					break;
-				
-				default:
-					
+				case 'add':addUserGroup();break;
+				case 'edit':editUserGroup();break;
+				case 'delete':deleteUserGroup();break;
+				default: refreshNode();
 			}
 		}
 		
@@ -51,18 +44,19 @@
 		
 		function addUserGroup(){
 			var node = $('#usergrouptree').tree('getSelected');
-			$('#addUserGroupWindow').window({
-				href:appName + "/usergroup/add/"+node.id+".htmls"
-			});
+			$('#addUserGroupWindow').window({href:appName + "/usergroup/add/"+node.id+".htmls"});
 			$('#addUserGroupWindow').window('open');
 		}
 		
 		function editUserGroup(){
 			var node = $('#usergrouptree').tree('getSelected');
-			$('#editUserGroupWindow').window({
-				href:appName + "/usergroup/edit/"+node.id+".htmls"
-			});
+			$('#editUserGroupWindow').window({href:appName + "/usergroup/edit/"+node.id+".htmls"});
 			$('#editUserGroupWindow').window('open');
+		}
+		
+		function refreshNode(){
+			var node = $('#usergrouptree').tree('getSelected');
+			$("#usergrouptree").tree("reload",node.target);
 		}
 		
 		function deleteUserGroup(){

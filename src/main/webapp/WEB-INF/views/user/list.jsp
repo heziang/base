@@ -15,7 +15,7 @@
     </div>
     <div data-options="region:'center',hideCollapsedContent:true">
     	
-    	<div>
+    	<div style="height:10%">
     		<form id="searchSysUserForm">
     			<input type="hidden" id="groupcode" name="conditions[groupcode]" value="<%=request.getAttribute("groupcode") %>;">
     			<table>
@@ -39,7 +39,7 @@
 			<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
 			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUsers()">删除</a>
 		</div>
-		<table id="userListTable" toolbar="#userListToolbar" title="用户列表" style="height:100%" data-options=" url:'<%=getServletContext().getContextPath()%>/user/search/list.htmls',idField:'userid',pagination:true">
+		<table id="userListTable" toolbar="#userListToolbar" title="用户列表" style="height:90%" data-options=" url:'<%=getServletContext().getContextPath()%>/user/search/list.htmls',idField:'userid',pagination:true">
 			<thead>
 	            <tr>
 	                <th data-options="field:'check',checkbox:true"></th>
@@ -61,21 +61,21 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-			$('#userListTable').datagrid();
+			
 		});
 		
 		function addUser(){
-			$('#addUserWindow').window({
-				href:appName + "/user/add/"+$("#groupcode").val()+".htmls"
-			});
-			$('#addUserWindow').window('open');
+			if($("#groupcode").val()!=""){
+				$.messager.alert('提示','请选择用户组.');
+			}else{
+				$('#addUserWindow').window({href:appName + "/user/add/"+$("#groupcode").val()+".htmls"});
+				$('#addUserWindow').window('open');
+			}
 		}
 		
 		function editUser(){
 			var row = $('#userListTable').datagrid("getSelected");
-			$('#editUserWindow').window({
-				href:appName + "/user/edit/"+row.userid+".htmls"
-			});
+			$('#editUserWindow').window({href:appName + "/user/edit/"+row.userid+".htmls"});
 			$('#editUserWindow').window('open');
 		}
 		
