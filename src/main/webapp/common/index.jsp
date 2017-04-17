@@ -15,12 +15,9 @@
 		</div>
 		<div data-options="region:'south',split:true" style="height:10%;"></div>
 		<div data-options="region:'west',split:true" title="菜单" style="width:20%;">
-			<div id="index_main_menu" class="easyui-accordion" data-options="fit:true,border:false">
+			<div id="index_main_menu" class="easyui-accordion" data-options="onSelect:index_selectMeanu,fit:true,border:false">
 				<div title="用户管理" style="padding:10px;">
 					content3
-				</div>
-				<div title="资源管理" style="padding:10px;">
-					content2
 				</div>
 			</div>
 		</div>
