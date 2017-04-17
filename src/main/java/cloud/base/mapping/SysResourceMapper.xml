@@ -9,4 +9,91 @@
 		<result column="resourcevalue" property="resourcevalue" jdbcType="VARCHAR" />
 		<result column="resourceorder" property="resourceorder" jdbcType="INTEGER" />
 	</resultMap>
+	<insert id="save" keyProperty="resourcecode" parameterType="cloud.base.model.SysResource" >
+		<selectKey keyProperty="resourcecode" resultType="String" order="BEFORE">
+	        select  replace(uuid(),'-','')   from dual
+	    </selectKey> 
+	    insert into sys_resource 
+	    	(resourcecode, groupcode, resourcename,resourcetype,resourcevalue,resourceorder) 
+	    values 
+	    	(
+		    	#{resourcecode,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},
+		    	#{resourcename,jdbcType=VARCHAR},#{resourcetype,jdbcType=VARCHAR},
+		    	#{resourcevalue,jdbcType=VARCHAR},#{resourceorder,jdbcType=INT},
+	    	);
+  	</insert>
+  	<update id="update" parameterType="cloud.base.model.SysResource">
+	        update sys_resource t
+	        <set>
+	            <if test="groupcode != null and groupcode !=''">
+	            	groupcode=#{groupcode},
+	            </if>
+	            <if test="resourcename != null and resourcename !=''">
+	            	resourcename=#{resourcename},
+	            </if>
+	            <if test="resourcetype != null and resourcetype !=''">
+	            	resourcetype=#{resourcetype},
+	            </if>
+	            <if test="resourcevalue != null and resourcevalue !=''">
+	            	resourcevalue=#{resourcevalue},
+	            </if>
+	            <if test="resourceorder != null and resourceorder !=''">
+	            	resourceorder=#{resourceorder}
+	            </if>
+	        </set>
+	        where t.resourcecode = #{resourcecode,jdbcType=VARCHAR}
+	</update>
+	<delete id="delete" parameterType="String">  
+        delete from sys_resource where resourcecode in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+	</delete>  
+	<select id="search" resultMap="SysResourceMap" parameterType="Map">
+		select
+		t.*
+		from sys_resource t 
+		where 1=1
+		<if test="resourcename!=null and resourcename!='' ">  
+           and t.resourcename like concat(concat('%', #{resourcename}),'%')   
+        </if>
+		<if test="resourcevalue!=null and resourcevalue!='' ">  
+           and u.resourcevalue like concat(concat('%', #{resourcevalue}),'%')   
+        </if>
+		<if test="groupcode!=null and groupcode!='' ">  
+           and t.groupcode =  #{groupcode}
+        </if>
+		<if test="resourcetype!=null and resourcetype!='' ">  
+           and t.resourcetype =  #{resourcetype}
+        </if>
+        <if test="start!=null and rows!=null">
+        	limit #{start}, #{rows}
+        </if>
+	</select>
+	
+	<select id="getTotal" resultType="String" parameterType="Map">
+		select
+		count(*)
+		from sys_resource t 
+		where 1=1
+		<if test="resourcename!=null and resourcename!='' ">  
+           and t.resourcename like concat(concat('%', #{resourcename}),'%')   
+        </if>
+		<if test="resourcevalue!=null and resourcevalue!='' ">  
+           and u.resourcevalue like concat(concat('%', #{resourcevalue}),'%')   
+        </if>
+		<if test="groupcode!=null and groupcode!='' ">  
+           and t.groupcode =  #{groupcode}
+        </if>
+		<if test="resourcetype!=null and resourcetype!='' ">  
+           and t.resourcetype =  #{resourcetype}
+        </if>
+	</select>
+	
+	<select id="getSysResourceById" resultMap="SysResourceMap" parameterType="java.lang.String">
+		select
+		t.*
+		from sys_resource t 
+		where t.resourcecode = #{resourcecode,jdbcType=VARCHAR}
+	</select>
 </mapper>
