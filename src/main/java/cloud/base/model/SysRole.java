@@ -5,21 +5,22 @@ package cloud.base.model;
  * 系统角色类
  */
 public class SysRole {
-	private String roleId;
-	private String roleName;
+	private String rolecode;
+	private String rolename;
 	private String groupcode;
 	private Integer roleorder;
-	public String getRoleId() {
-		return roleId;
+	
+	public String getRolecode() {
+		return rolecode;
 	}
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
+	public void setRolecode(String rolecode) {
+		this.rolecode = rolecode;
 	}
-	public String getRoleName() {
-		return roleName;
+	public String getRolename() {
+		return rolename;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
+	public void setRolename(String rolename) {
+		this.rolename = rolename;
 	}
 	public String getGroupcode() {
 		return groupcode;

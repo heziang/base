@@ -2,21 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="cloud.base.dao.SysRoleMapper">
 	<resultMap id="SysRoleMap" type="cloud.base.model.SysRole">
-		<id column="roleId" property="roleId" jdbcType="VARCHAR" />
+		<id column="rolecode" property="rolecode" jdbcType="VARCHAR" />
 		<result column="groupcode" property="groupcode" jdbcType="VARCHAR" />
-		<result column="roleName" property="roleName" jdbcType="VARCHAR" />
+		<result column="rolename" property="rolename" jdbcType="VARCHAR" />
 		<result column="roleorder" property="roleorder" jdbcType="INTEGER" />
 	</resultMap>
-	<insert id="save" keyProperty="roleId" parameterType="cloud.base.model.SysRole" >
-		<selectKey keyProperty="roleId" resultType="String" order="BEFORE">
+	<insert id="save" keyProperty="rolecode" parameterType="cloud.base.model.SysRole" >
+		<selectKey keyProperty="rolecode" resultType="String" order="BEFORE">
 	        select  replace(uuid(),'-','')   from dual
 	    </selectKey> 
 	    insert into sys_role 
-	    	(roleId, groupcode, roleName,roleorder) 
+	    	(rolecode, groupcode, rolename,roleorder) 
 	    values 
 	    	(
-		    	#{roleId,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},
-		    	#{roleName,jdbcType=VARCHAR},#{roleorder,jdbcType=INT}
+		    	#{rolecode,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},
+		    	#{rolename,jdbcType=VARCHAR},#{roleorder,jdbcType=INTEGER}
 	    	);
   	</insert>
   	<update id="update" parameterType="cloud.base.model.SysRole">
@@ -25,17 +25,17 @@
 	            <if test="groupcode != null and groupcode !=''">
 	            	groupcode=#{groupcode},
 	            </if>
-	            <if test="roleName != null and roleName !=''">
-	            	roleName=#{roleName},
+	            <if test="rolename != null and rolename !=''">
+	            	rolename=#{rolename},
 	            </if>
 	            <if test="roleorder != null and roleorder !=''">
 	            	roleorder=#{roleorder}
 	            </if>
 	        </set>
-	        where t.roleId = #{roleId,jdbcType=VARCHAR}
+	        where t.rolecode = #{rolecode,jdbcType=VARCHAR}
 	</update>
 	<delete id="delete" parameterType="String">  
-        delete from sys_role where roleId in 
+        delete from sys_role where rolecode in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
@@ -45,8 +45,8 @@
 		t.*
 		from sys_role t 
 		where 1=1
-		<if test="roleName !=null and roleName !='' ">  
-           and t.roleName like concat(concat('%', #{roleName}),'%')   
+		<if test="rolename !=null and rolename !='' ">  
+           and t.rolename like concat(concat('%', #{rolename}),'%')   
         </if>
 		<if test="groupcode!=null and groupcode!='' ">  
            and t.groupcode =  #{groupcode}
@@ -61,8 +61,8 @@
 		t.*
 		from sys_role t 
 		where 1=1
-		<if test="roleName !=null and roleName !='' ">  
-           and t.roleName like concat(concat('%', #{roleName}),'%')   
+		<if test="rolename !=null and rolename !='' ">  
+           and t.rolename like concat(concat('%', #{rolename}),'%')   
         </if>
 		<if test="groupcode!=null and groupcode!='' ">  
            and t.groupcode =  #{groupcode}
@@ -73,6 +73,6 @@
 		select
 		t.*
 		from sys_role t 
-		where t.roleId = #{roleId,jdbcType=VARCHAR}
+		where t.rolecode = #{rolecode,jdbcType=VARCHAR}
 	</select>
 </mapper>

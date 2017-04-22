@@ -20,8 +20,8 @@
     			<table>
     				<tr>
 		    			<td>角色名称:</td>
-		    			<td><input class="easyui-textbox" type="text" name="conditions[userid]"  data-options="validType:['username','length[0,50]']"></input></td>
-		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchUserList()">查询</a></td>
+		    			<td><input class="easyui-textbox" type="text" name="conditions[rolename]"  data-options="validType:['username','length[0,50]']"></input></td>
+		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchRoleList()">查询</a></td>
 		    		</tr>
     			</table>
     		</form>
@@ -36,8 +36,8 @@
 			<thead>
 	            <tr>
 	                <th data-options="field:'check',checkbox:true"></th>
-	                <th data-options="field:'userid',width:'25%'">角色名称</th>
-	                <th data-options="field:'username',width:'25%'">排序</th>
+	                <th data-options="field:'rolecode',width:'50%'">角色名称</th>
+	                <th data-options="field:'rolename',width:'50%'">排序</th>
 	            </tr>
 	        </thead>
 		</table>
@@ -56,7 +56,7 @@
 		});
 		
 		function addRole(){
-			if($("#groupcode").val()!=""){
+			if($("#groupcode").val()==""){
 				$.messager.alert('提示','请选择组.');
 			}else{
 				$('#addRoleWindow').window({href:appName + "/role/add/"+$("#groupcode").val()+".htmls"});

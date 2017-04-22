@@ -32,7 +32,7 @@
 	    <div id="resourceListToolbar">
 			<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addResource()">增加</a>
 			<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editResource()">编辑</a>
-			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteResources()">删除</a>
+			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="searchResourceList()">删除</a>
 		</div>
 		<table id="resourceListTable" toolbar="#resourceListToolbar" title="用户列表" style="height:90%" data-options=" url:'<%=getServletContext().getContextPath()%>/resource/search/list.htmls',idField:'userid',pagination:true">
 			<thead>
@@ -59,7 +59,7 @@
 		});
 		
 		function addResource(){
-			if($("#groupcode").val()!=""){
+			if($("#groupcode").val()==""){
 				$.messager.alert('提示','请选择组.');
 			}else{
 				$('#addResourceWindow').window({href:appName + "/resource/add/"+$("#groupcode").val()+".htmls"});

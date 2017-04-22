@@ -65,7 +65,7 @@
 		});
 		
 		function addUser(){
-			if($("#groupcode").val()!=""){
+			if($("#groupcode").val()==""){
 				$.messager.alert('提示','请选择用户组.');
 			}else{
 				$('#addUserWindow').window({href:appName + "/user/add/"+$("#groupcode").val()+".htmls"});
