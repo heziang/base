@@ -8,7 +8,7 @@
 </head>
 <body>
 	 <form id="editSysUserForm">
-   		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>;">
+   		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>">
    		<table>
     		<tr>
     			<td>用户名:</td>

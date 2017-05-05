@@ -23,7 +23,7 @@ public class SysResourceServiceImpl implements ISysResourceService {
 	private SysResourceMapper sysrolemapper;
 
 	public SysResource loadResourceById(String id) {
-		return sysrolemapper.loadUserById(id);
+		return sysrolemapper.getSysResourceById(id);
 	}
 
 	public List<SysResource> search(Map conditions) {

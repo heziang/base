@@ -15,9 +15,11 @@
 		</div>
 		<div data-options="region:'south',split:true" style="height:10%;"></div>
 		<div data-options="region:'west',split:true" title="菜单" style="width:20%;">
-			<div id="index_main_menu" class="easyui-accordion" data-options="onSelect:index_selectMeanu,fit:true,border:false">
-				<div title="用户管理" style="padding:10px;">
-					content3
+			<div id="index_main_menu" class="easyui-accordion" data-options="fit:true,border:false">
+				<div title="权限管理" style="padding:10px;">
+					<div onclick="index_selectMeanu('用户管理','/user/list.htmls')">用户管理</div>
+					<div onclick="index_selectMeanu('角色管理','/role/list.htmls')">角色管理</div>
+					<div onclick="index_selectMeanu('资源管理','/resource/list.htmls')">资源管理</div>
 				</div>
 			</div>
 		</div>

@@ -13,15 +13,17 @@
     	<table>
     		<tr>
     			<td>分组名称:</td>
-    			<td><input class="easyui-textbox" type="text" name="groupname" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="groupname"  required="true"  data-options="validType:['unnormal','length[0,50]']"></input></td>
     		</tr>
     		<tr>
     			<td>类型:</td>
     			<td>
 					<input class="easyui-combobox" style="width:100%;" name="grouptype" required="true" data-options="textField:'text',valueField:'value',url:'<%=getServletContext().getContextPath() %>/dictionary/searchByTypecode/userGroupType.htmls'">
 				</td>
+			</tr>
+    		<tr>
     			<td>排序:</td>
-    			<td><input class="easyui-textbox" type="text" name="gorder" prompt="输入排序值" data-options="validType:['unnormal','integer']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="gorder"  required="true"  prompt="输入排序值" data-options="validType:['unnormal','integer','length[0,3]']"></input></td>
     		</tr>
 		</table>
 		<div style="text-align:center;padding:5px">
@@ -42,9 +44,8 @@
 		               url: appName+"/usergroup/update.htmls",
 		               data: $("#editUserGroupForm").serialize(),
 		               success: function(data){
-		            	   
-		            	    var node  = $('#usergrouptree').tree('find', $("#pgroupcode").val());
-		            	    $("#usergrouptree").tree("reload",node.target);
+		            	   var node = $('#usergrouptree').tree('getSelected');
+		            	    $("#usergrouptree").tree("reload",$("#usergrouptree").tree("getParent",node.target).target);
 		            	    
 		            	    $('#editUserGroupWindow').window('close');
 							$.messager.alert('操作结果','操作成功');

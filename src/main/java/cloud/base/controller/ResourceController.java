@@ -77,8 +77,8 @@ public class ResourceController {
 	 * 删除方法
 	 */
 	@RequestMapping("/delete")
-	public @ResponseBody String delete(String userids){
-		sysresourceservice.deleteSysResource(userids.split(","));
+	public @ResponseBody String delete(String ids){
+		sysresourceservice.deleteSysResource(ids.split(","));
 		return null;
 	}
 }

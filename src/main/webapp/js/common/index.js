@@ -1,14 +1,13 @@
 $(document).ready(function() {
 });
 
-function index_selectMeanu(title,index){
-	
-	if($('#index_main_menu').tabs('exists', title)){
-		$('#index_main_menu').tabs('select', title); 
+function index_selectMeanu(title,url){
+	if($('#index_main_tab').tabs('exists', title)){
+		$('#index_main_tab').tabs('select', title); 
 	}else{
 		var tab = {
 			    title:title,
-			    href:appName+'/user/list.htmls',
+			    href:appName+url,
 			    closable:true,
 			    tools:[{
 			        iconCls:'icon-mini-refresh'
@@ -16,7 +15,6 @@ function index_selectMeanu(title,index){
 			}
 		$('#index_main_tab').tabs('add',tab);
 	}
-	  
 }
 
 

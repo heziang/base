@@ -4,10 +4,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>resourceGroup</title>
+<title>roleGroup</title>
 </head>
 <body>
-    <ul id="resourcegrouptree" class="easyui-tree" data-options="url:'<%=getServletContext().getContextPath() %>/resourcegroup/searchByParent.htmls',onClick:clickResourceGroupTree,onContextMenu: openOrgMenu">
+    <ul id="rolegrouptree" class="easyui-tree" data-options="url:'<%=getServletContext().getContextPath() %>/rolegroup/searchByParent.htmls',onClick:clickRoleGroupTree,onContextMenu: openOrgMenu">
 	    
 	</ul>
 	<div id="orgrightmenu" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
@@ -18,9 +18,9 @@
         <div data-options="name:'refresh'">刷新</div>
     </div>
     
-    <div id="addResourceGroupWindow" class="easyui-window" title="增加用户组" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+    <div id="addRoleGroupWindow" class="easyui-window" title="增加用户组" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
 	</div>
-	<div id="editResourceGroupWindow" class="easyui-window" title="编辑用户组" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+	<div id="editRoleGroupWindow" class="easyui-window" title="编辑用户组" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
 	</div>
     <script type="text/javascript">
 	    $(document).ready(function() {
@@ -29,9 +29,9 @@
 	    
 		function menuHandler(item){
 			switch(item.name){
-				case 'add':addResourceGroup();break;
-				case 'edit':editResourceGroup();break;
-				case 'delete':deleteResourceGroup();break;
+				case 'add':addRoleGroup();break;
+				case 'edit':editRoleGroup();break;
+				case 'delete':deleteRoleGroup();break;
 				default: refreshNode();
 			}
 		}
@@ -42,34 +42,34 @@
 			$('#orgrightmenu').menu('show',{left: e.pageX,top: e.pageY});
 		}
 		
-		function addResourceGroup(){
-			var node = $('#resourcegrouptree').tree('getSelected');
-			$('#addResourceGroupWindow').window({href:appName + "/resourcegroup/add/"+node.id+".htmls"});
-			$('#addResourceGroupWindow').window('open');
+		function addRoleGroup(){
+			var node = $('#rolegrouptree').tree('getSelected');
+			$('#addRoleGroupWindow').window({href:appName + "/rolegroup/add/"+node.id+".htmls"});
+			$('#addRoleGroupWindow').window('open');
 		}
 		
-		function editResourceGroup(){
-			var node = $('#resourcegrouptree').tree('getSelected');
-			$('#editResourceGroupWindow').window({href:appName + "/resourcegroup/edit/"+node.id+".htmls"});
-			$('#editResourceGroupWindow').window('open');
+		function editRoleGroup(){
+			var node = $('#rolegrouptree').tree('getSelected');
+			$('#editRoleGroupWindow').window({href:appName + "/rolegroup/edit/"+node.id+".htmls"});
+			$('#editRoleGroupWindow').window('open');
 		}
 		
 		function refreshNode(){
-			var node = $('#resourcegrouptree').tree('getSelected');
-			$("#resourcegrouptree").tree("reload",node.target);
+			var node = $('#rolegrouptree').tree('getSelected');
+			$("#rolegrouptree").tree("reload",node.target);
 		}
 		
-		function deleteResourceGroup(){
+		function deleteRoleGroup(){
 			$.messager.confirm('操作确认','确认操作?',function(r){
 				if (r){
-					var node = $('#resourcegrouptree').tree('getSelected');
+					var node = $('#rolegrouptree').tree('getSelected');
 					if(node.id){
 						$.ajax({
 				               type: "POST",
-				               url: appName+"/resourcegroup/delete.htmls",
+				               url: appName+"/rolegroup/delete.htmls",
 				               data: {groupids:node.id},
 				               success: function(data){
-				            	    $("#resourcegrouptree").tree("reload",$("#resourcegrouptree").tree("getParent",node.target).target);
+				            	    $("#rolegrouptree").tree("reload",$("#rolegrouptree").tree("getParent",node.target).target);
 									$.messager.alert('操作结果','操作成功');
 				                  }
 				            });

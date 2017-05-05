@@ -17,17 +17,17 @@
     	
     	<div style="height:10%">
     		<form id="searchSysUserForm">
-    			<input type="hidden" id="groupcode" name="conditions[groupcode]" value="<%=request.getAttribute("groupcode") %>;">
+    			<input type="hidden" id="userlistgroupcode" name="conditions[groupcode]" value="<%=request.getAttribute("groupcode") %>">
     			<table>
     				<tr>
 		    			<td>用户名:</td>
-		    			<td><input class="easyui-textbox" type="text" name="conditions[userid]"  data-options="validType:['username','length[0,50]']"></input></td>
+		    			<td><input class="easyui-textbox" type="text" name="conditions[userid]"  data-options="validType:['length[0,50]']"></input></td>
 	    				<td>姓名:</td>
    						<td><input class="easyui-textbox" data-options="validType:['name','length[0,10]']" type="text" name="conditions[username]" ></input></td>
 		    			<td>创建时间:</td>
-		    			<td><input class="easyui-datebox" type="text" name="conditions[startDate]"  data-options="validType:['username','length[0,50]']"></input></td>
+		    			<td><input class="easyui-datebox" type="text" name="conditions[startDate]"  data-options="validType:['date']"></input></td>
 		    			<td>至</td>
-		    			<td><input class="easyui-datebox" type="text" name="conditions[endDate]"   data-options="validType:['username','length[0,50]']"></input></td>
+		    			<td><input class="easyui-datebox" type="text" name="conditions[endDate]"   data-options="validType:['date']"></input></td>
 		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchUserList()">查询</a></td>
 		    		</tr>
     			</table>
@@ -61,14 +61,14 @@
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-			
+			$('#userListTable').datagrid();
 		});
 		
 		function addUser(){
-			if($("#groupcode").val()==""){
+			if($("#userlistgroupcode").val()=="null"){
 				$.messager.alert('提示','请选择用户组.');
 			}else{
-				$('#addUserWindow').window({href:appName + "/user/add/"+$("#groupcode").val()+".htmls"});
+				$('#addUserWindow').window({href:appName + "/user/add/"+$("#userlistgroupcode").val()+".htmls"});
 				$('#addUserWindow').window('open');
 			}
 		}
@@ -109,7 +109,7 @@
 		}
 		
 		function clickUserGroupTree(node){
-			$("#groupcode").val(node.id);
+			$("#userlistgroupcode").val(node.id);
 			$('#userListTable').datagrid('load',$("#searchSysUserForm").serializeObject());
 		}
 	</script>

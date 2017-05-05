@@ -3,7 +3,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>用户列表</title>
+<title>角色列表</title>
 </head>
 <body>
 	
@@ -16,11 +16,11 @@
     	
     	<div style="height:10%">
     		<form id="searchSysRoleForm">
-    			<input type="hidden" id="groupcode" name="conditions[groupcode]" value="<%=request.getAttribute("groupcode") %>;">
+    			<input type="hidden" id="rolelistgroupcode" name="conditions[groupcode]" value="<%=request.getAttribute("groupcode") %>">
     			<table>
     				<tr>
 		    			<td>角色名称:</td>
-		    			<td><input class="easyui-textbox" type="text" name="conditions[rolename]"  data-options="validType:['username','length[0,50]']"></input></td>
+		    			<td><input class="easyui-textbox" type="text" name="conditions[rolename]"  data-options="validType:['length[0,50]']"></input></td>
 		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchRoleList()">查询</a></td>
 		    		</tr>
     			</table>
@@ -36,44 +36,45 @@
 			<thead>
 	            <tr>
 	                <th data-options="field:'check',checkbox:true"></th>
-	                <th data-options="field:'rolecode',width:'50%'">角色名称</th>
-	                <th data-options="field:'rolename',width:'50%'">排序</th>
+	                <th data-options="field:'rolename',width:'50%'">角色名称</th>
+	                <th data-options="field:'roleorder',width:'50%'">排序</th>
 	            </tr>
 	        </thead>
 		</table>
 		
-		<div id="addRoleWindow" class="easyui-window" title="增加" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+		<div id="addRoleWindow" class="easyui-window" title="增加" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
 		</div>
 		
-		<div id="editRoleWindow" class="easyui-window" title="编辑" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+		<div id="editRoleWindow" class="easyui-window" title="编辑" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
 		</div>
     </div>
 </div>
 	<script type="text/javascript">
 		
 		$(document).ready(function() {
-			
+			$('#roleListTable').datagrid();
 		});
 		
 		function addRole(){
-			if($("#groupcode").val()==""){
+			if($("#rolelistgroupcode").val()=="null"){
 				$.messager.alert('提示','请选择组.');
 			}else{
-				$('#addRoleWindow').window({href:appName + "/role/add/"+$("#groupcode").val()+".htmls"});
+				$('#addRoleWindow').window({href:appName + "/role/add/"+$("#rolelistgroupcode").val()+".htmls"});
 				$('#addRoleWindow').window('open');
 			}
 		}
 		
 		function editRole(){
-			var row = $('#RoleListTable').datagrid("getSelected");
-			$('#editRoleWindow').window({href:appName + "/role/edit/"+row.Roleid+".htmls"});
+			debugger;
+			var row = $('#roleListTable').datagrid("getSelected");
+			$('#editRoleWindow').window({href:appName + "/role/edit/"+row.rolecode+".htmls"});
 			$('#editRoleWindow').window('open');
 		}
 		
 		function deleteRoles(){
 			var ids = "";
 			$($('#roleListTable').datagrid("getSelections")).each(function(index,obj){
-				ids += obj.userid+",";
+				ids += obj.rolecode+",";
 			});
 			if(ids.length>0&&ids.charAt(ids.length-1)==","){
 				$.messager.confirm('操作确认','确认操作?',function(r){
@@ -82,7 +83,7 @@
 						$.ajax({
 				               type: "POST",
 				               url: appName+"/role/delete.htmls",
-				               data: {userids:ids},
+				               data: {ids:ids},
 				               success: function(data){
 									$('#roleListTable').datagrid('reload');
 									$.messager.alert('操作结果','操作成功');
@@ -100,7 +101,7 @@
 		}
 		
 		function clickRoleGroupTree(node){
-			$("#groupcode").val(node.id);
+			$("#rolelistgroupcode").val(node.id);
 			$('#roleListTable').datagrid('load',$("#searchSysRoleForm").serializeObject());
 		}
 	</script>

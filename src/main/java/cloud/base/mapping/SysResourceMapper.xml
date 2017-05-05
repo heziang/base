@@ -19,7 +19,7 @@
 	    	(
 		    	#{resourcecode,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},
 		    	#{resourcename,jdbcType=VARCHAR},#{resourcetype,jdbcType=VARCHAR},
-		    	#{resourcevalue,jdbcType=VARCHAR},#{resourceorder,jdbcType=INTEGER},
+		    	#{resourcevalue,jdbcType=VARCHAR},#{resourceorder,jdbcType=INTEGER}
 	    	);
   	</insert>
   	<update id="update" parameterType="cloud.base.model.SysResource">

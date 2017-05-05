@@ -48,8 +48,11 @@ public class SecurityInvocationSecurityMetadataSource implements
 		//匹配权限所需角色，去重
 		for(Map<String,String> allResourceMap : allResource){
 			if(allResourceMap!=null){
-				if (urlMatcher.pathMatchesUrl(allResourceMap.get("resourcevalue"),url)) {
-					roles.add(allResourceMap.get("rolecode"));
+				//如果allResourceMap.get("resourcevalue")为null，则证明有角色没有被赋予权限，忽略掉此角色
+				if(allResourceMap.get("resourcevalue")!=null){
+					if (urlMatcher.pathMatchesUrl(allResourceMap.get("resourcevalue"),url)) {
+						roles.add(allResourceMap.get("rolecode"));
+					}
 				}
 			}
 		}

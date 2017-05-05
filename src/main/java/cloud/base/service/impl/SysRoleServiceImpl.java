@@ -23,7 +23,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 	private SysRoleMapper sysrolemapper;
 
 	public SysRole loadResourceById(String id) {
-		return sysrolemapper.loadUserById(id);
+		return sysrolemapper.getSysRoleById(id);
 	}
 
 	public List<SysRole> search(Map conditions) {
