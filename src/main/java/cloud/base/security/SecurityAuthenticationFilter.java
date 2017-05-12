@@ -22,19 +22,14 @@ public class SecurityAuthenticationFilter extends UsernamePasswordAuthentication
         @Override
         public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         		
-                if (!request.getMethod().equals("POST")) {
-                        throw new AuthenticationServiceException("登录方法只支持POST方式，不支持" + request.getMethod()+"方法");
-                }
-
-                
-                String username = obtainUsername(request);
-                String password = obtainPassword(request);
-                
-                
+//                if (!request.getMethod().equals("POST")) {
+//                        throw new AuthenticationServiceException("登录方法只支持POST方式，不支持" + request.getMethod()+"方法");
+//                }
 //                如果需要定制业务，可以重写此方法。
 //                BadCredentialsException exception = new BadCredentialsException("用户名或密码不匹配");  
 //                                                                throw exception;  
-                
+                String username = obtainUsername(request);
+                String password = obtainPassword(request);
                 //实现验证
         		UsernamePasswordAuthenticationToken authRequest = new UsernamePasswordAuthenticationToken(username, password);
                 //允许设置用户详细属性

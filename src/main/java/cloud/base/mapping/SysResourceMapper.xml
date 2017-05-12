@@ -60,7 +60,7 @@
 		<if test="resourcevalue!=null and resourcevalue!='' ">  
            and u.resourcevalue like concat(concat('%', #{resourcevalue}),'%')   
         </if>
-		<if test="groupcode!=null and groupcode!='' ">  
+		<if test="groupcode!='' ">  
            and t.groupcode =  #{groupcode}
         </if>
 		<if test="resourcetype!=null and resourcetype!='' ">  

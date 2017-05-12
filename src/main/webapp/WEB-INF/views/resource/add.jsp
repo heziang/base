@@ -46,7 +46,7 @@
 		               url: appName+"/resource/save.htmls",
 		               data: $("#addSysResourceForm").serialize(),
 		               success: function(data){
-		            	    $('#addResourceWindow').window('close');
+		            	   closeAddResourceWindow();
 							$('#resourceListTable').datagrid('reload');
 							$.messager.alert('操作结果','操作成功');
 		                  }

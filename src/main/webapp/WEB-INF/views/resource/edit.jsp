@@ -48,7 +48,7 @@
 		               url: appName+"/resource/update.htmls",
 		               data: $("#editSysResourceForm").serialize(),
 		               success: function(data){
-		            	    $('#editResourceWindow').window('close');
+		            	   closeEditResourceWindow();
 							$('#resourceListTable').datagrid('reload');
 							$.messager.alert('操作结果','操作成功');
 		                  }

@@ -11,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
+
 import cloud.base.dao.SysResourceMapper;
+import cloud.base.dao.UserRoleResourceMapper;
 import cloud.base.model.SysResource;
 import cloud.base.model.VO.PageModel;
 import cloud.base.service.ISysResourceService;
@@ -21,7 +24,10 @@ import cloud.base.service.ISysResourceService;
 public class SysResourceServiceImpl implements ISysResourceService {
 	@Autowired
 	private SysResourceMapper sysrolemapper;
-
+	
+	@Autowired
+	private UserRoleResourceMapper userroleresourcemapper;
+	
 	public SysResource loadResourceById(String id) {
 		return sysrolemapper.getSysResourceById(id);
 	}
@@ -53,6 +59,10 @@ public class SysResourceServiceImpl implements ISysResourceService {
 	public String deleteSysResource(String[] ids) {
 		sysrolemapper.delete(ids);
 		return null;
+	}
+
+	public List findAllResourceByRoleCode(String rolecode) {
+		return userroleresourcemapper.findAllResourceByRolecode(rolecode);
 	}
 
 }

@@ -44,9 +44,10 @@
 	            <tr>
 	                <th data-options="field:'check',checkbox:true"></th>
 	                <th data-options="field:'userid',width:'25%'">用户名</th>
-	                <th data-options="field:'username',width:'25%'">姓名</th>
+	                <th data-options="field:'username',width:'10%'">姓名</th>
 	                <th data-options="field:'mobilephone',width:'25%'">手机</th>
 	                <th data-options="field:'telephone',width:'24%'">电话</th>
+	                <th data-options="field:'_operate',width:'15%',align:'center',formatter:formatOperRole">分配角色</th>
 	            </tr>
 	        </thead>
 		</table>
@@ -55,6 +56,9 @@
 		</div>
 		
 		<div id="editUserWindow" class="easyui-window" title="编辑用户" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
+		</div>
+		
+		<div id="grantRoleWindow" class="easyui-window" title="分配角色" data-options="top:'25%',left:'25%',modal:true,width:'50%',height:'50%',padding:'10px'" closed="true" >
 		</div>
     </div>
 </div>
@@ -74,6 +78,11 @@
 		}
 		
 		function editUser(){
+			var rows = $('#userListTable').datagrid("getSelections");
+			if(rows.length!=1){
+				$.messager.alert('提示','请选择一条记录编辑.');
+				return;
+			}
 			var row = $('#userListTable').datagrid("getSelected");
 			$('#editUserWindow').window({href:appName + "/user/edit/"+row.userid+".htmls"});
 			$('#editUserWindow').window('open');
@@ -111,6 +120,15 @@
 		function clickUserGroupTree(node){
 			$("#userlistgroupcode").val(node.id);
 			$('#userListTable').datagrid('load',$("#searchSysUserForm").serializeObject());
+		}
+		
+		function formatOperRole(val,row,index){
+			return '<a class="icon-man" title="分配角色" onclick="grantRole(\''+row.userid+'\')">&nbsp;&nbsp;&nbsp;&nbsp;</a>';
+		}
+		
+		function grantRole(userid){
+			$('#grantRoleWindow').window({href:appName + "/role/userselectrole/"+userid+".htmls"});
+			$('#grantRoleWindow').window('open');
 		}
 	</script>
 </body>

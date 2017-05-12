@@ -45,10 +45,8 @@
 		               data: $("#editResourceGroupForm").serialize(),
 		               success: function(data){
 		            	   
-		            	   var node = $('#resourcegrouptree').tree('getSelected');
-		            	    $("#resourcegrouptree").tree("reload",$("#resourcegrouptree").tree("getParent",node.target).target);
-		            	    
-		            	    $('#editResourceGroupWindow').window('close');
+		            	    refreshParentNode();
+		            	    closeEditResourceGroupWindow();
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });

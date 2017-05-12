@@ -62,10 +62,6 @@ public class SecurityInvocationSecurityMetadataSource implements
 			ConfigAttribute ca = new SecurityConfig(role);
 			cas.add(ca);
 		}
-		//如果没有取到对应URL的角色
-		if(cas.size()==0){
-			
-		}
 		return cas;
 	}
 

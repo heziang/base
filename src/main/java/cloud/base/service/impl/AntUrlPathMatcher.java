@@ -36,7 +36,9 @@ import cloud.base.service.UrlMatcher;
 		  if (("/**".equals(path)) || ("**".equals(path))) {
 			  return true;     
 			  }  
-		  
+		  if(url.contains("?")){
+			  url = url.split("\\?")[0];
+		  }
 		  return this.pathMatcher.match((String)path, url); 
 	  } 
 	  

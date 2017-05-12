@@ -48,7 +48,7 @@
 		<if test="rolename !=null and rolename !='' ">  
            and t.rolename like concat(concat('%', #{rolename}),'%')   
         </if>
-		<if test="groupcode!=null and groupcode!='' ">  
+		<if test="groupcode!='' ">  
            and t.groupcode =  #{groupcode}
         </if>
         <if test="start!=null and rows!=null">

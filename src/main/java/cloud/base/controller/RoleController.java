@@ -1,12 +1,15 @@
 package cloud.base.controller;
 
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -34,6 +37,11 @@ public class RoleController {
 	public String list(ModelMap modelMap,String groupcode){
 		modelMap.addAttribute("groupcode", groupcode);
 		return "/role/list";
+	}
+	@RequestMapping("/userselectrole/{userid}")
+	public String userselectrole(ModelMap modelMap,@PathVariable("userid") String userid){
+		modelMap.addAttribute("userid",userid);
+		return "/role/userselectrole";
 	}
 	
 	@RequestMapping("/search/list")
@@ -78,7 +86,33 @@ public class RoleController {
 	 */
 	@RequestMapping("/delete")
 	public @ResponseBody String delete(String ids){
-		sysroleservice.deleteSysRole(ids.split(","));
+		if(!StringUtils.isEmpty(ids)){
+			String[] idsArray = ids.split(",");
+			for (String id : idsArray) {
+				//如果角色被引用，则不允许删除
+			}
+			sysroleservice.deleteSysRole(ids.split(","));
+		}
+		return null;
+	}
+	
+	/**
+	 * @param userid
+	 * 		根据用户id得到对应的角色
+	 * @return
+	 */
+	@RequestMapping("/getRolesByUserid/{userid}")
+	public @ResponseBody List getRolesByUserid(@PathVariable("userid") String userid){
+		return sysroleservice.findAllRoleByUserId(userid);
+	}
+	
+	/**
+	 * 保存资源
+	 */
+	@RequestMapping("/saveRoleResources")
+	public  @ResponseBody String saveRoleResources(ModelMap modelMap,String rolecode, String resourcecodes){
+		String[] resArray = resourcecodes.split(",");
+		sysroleservice.saveRoleResources(rolecode, resArray);
 		return null;
 	}
 }

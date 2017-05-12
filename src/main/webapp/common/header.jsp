@@ -1,4 +1,4 @@
-<%@page language="java" import="java.util.*" pageEncoding="UTF-8"%>
+<%@page language="java"  pageEncoding="UTF-8"%>
 <!DOCTYPEhtmlPUBLIC"-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -9,6 +9,7 @@
 	<script type="text/javascript">
 		var appName='<%= this.getServletContext().getContextPath() %>';
 	</script>
-	这里是头部文件
+	欢迎，
+	${SPRING_SECURITY_CONTEXT.authentication.principal.userinfo.username}
 </body>
 </html>

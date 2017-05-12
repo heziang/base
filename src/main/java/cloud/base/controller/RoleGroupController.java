@@ -86,7 +86,16 @@ public class RoleGroupController {
 	 */
 	@RequestMapping("/delete")
 	public @ResponseBody String delete(String groupids){
-		rolegroupservice.delete(groupids.split(","));
+		if(!StringUtils.isEmpty(groupids)){
+			String[] idsArray = groupids.split(",");
+			for (String id : idsArray) {
+				//如果有子节点，或者组里有角色记录，不允许删除
+				if(rolegroupservice.groupIsHaschildren(id)>0){
+					
+				}
+			}
+			rolegroupservice.delete(groupids.split(","));
+		}
 		return null;
 	}
 }

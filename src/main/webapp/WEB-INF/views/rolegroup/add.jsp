@@ -43,11 +43,8 @@
 		               url: appName+"/rolegroup/save.htmls",
 		               data: $("#addRoleGroupForm").serialize(),
 		               success: function(data){
-		            	   
-		            	   var node = $('#rolegrouptree').tree('getSelected');
-		            	    $("#rolegrouptree").tree("reload",$("#rolegrouptree").tree("getParent",node.target).target);
-		            	    
-		            	    $('#addRoleGroupWindow').window('close');
+		            	    refreshParentNode();
+		            	    closeAddRoleGroupWindow();
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });

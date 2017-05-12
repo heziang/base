@@ -44,4 +44,23 @@ public interface ISysRoleService {
 	 */
 	String deleteSysRole(String[] ids);
 	
+	/**
+	 * @param userid
+	 * 			根据用户id得到所有角色code
+	 * @return
+	 */
+	List<SysRole> findAllRoleByUserId(String userid);
+	/**
+	 * @param rolecode
+	 * @param resourcecodes
+	 * 		保存角色分配的系统资源
+	 * @return
+	 */
+	String saveRoleResources(String rolecode,String[] resourcecodes);
+	/**
+	 * @param rolecode
+	 * 		删除角色对应资源
+	 * @return
+	 */
+	String deleteResourceByRolecode(String rolecode);
 }

@@ -7,10 +7,10 @@
 <title>roleGroup</title>
 </head>
 <body>
-    <ul id="rolegrouptree" class="easyui-tree" data-options="url:'<%=getServletContext().getContextPath() %>/rolegroup/searchByParent.htmls',onClick:clickRoleGroupTree,onContextMenu: openOrgMenu">
+    <ul id="rolegrouptree" class="easyui-tree" data-options="url:'<%=getServletContext().getContextPath() %>/rolegroup/searchByParent.htmls',onClick:clickRoleGroupTree,onContextMenu: openRoleMenu">
 	    
 	</ul>
-	<div id="orgrightmenu" class="easyui-menu" data-options="onClick:menuHandler" style="width:120px;">
+	<div id="rolerightmenu" class="easyui-menu" data-options="onClick:rolemenuHandler" style="width:120px;">
     	<div data-options="name:'add',iconCls:'icon-add'">增加</div>
    	    <div data-options="name:'edit',iconCls:'icon-edit'">编辑</div>
         <div data-options="name:'delete',iconCls:'icon-remove'">删除</div>
@@ -18,28 +18,28 @@
         <div data-options="name:'refresh'">刷新</div>
     </div>
     
-    <div id="addRoleGroupWindow" class="easyui-window" title="增加用户组" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
+    <div id="addRoleGroupWindow" class="easyui-window" title="增加角色组" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
 	</div>
-	<div id="editRoleGroupWindow" class="easyui-window" title="编辑用户组" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
+	<div id="editRoleGroupWindow" class="easyui-window" title="编辑角色组" data-options="top:'25%',left:'25%',modal:true,width:'30%',height:'30%',padding:'10px'" closed="true" >
 	</div>
     <script type="text/javascript">
 	    $(document).ready(function() {
 			
 		});
 	    
-		function menuHandler(item){
+		function rolemenuHandler(item){
 			switch(item.name){
 				case 'add':addRoleGroup();break;
 				case 'edit':editRoleGroup();break;
 				case 'delete':deleteRoleGroup();break;
-				default: refreshNode();
+				default: refreshParentNode();
 			}
 		}
 		
-		function openOrgMenu(e,node){
+		function openRoleMenu(e,node){
 			e.preventDefault();
 			$(this).tree('select',node.target);
-			$('#orgrightmenu').menu('show',{left: e.pageX,top: e.pageY});
+			$('#rolerightmenu').menu('show',{left: e.pageX,top: e.pageY});
 		}
 		
 		function addRoleGroup(){
@@ -58,6 +58,16 @@
 			var node = $('#rolegrouptree').tree('getSelected');
 			$("#rolegrouptree").tree("reload",node.target);
 		}
+		//如果有父节点，刷新父节点，否则刷新本节点
+		function refreshParentNode(){
+			var node = $('#rolegrouptree').tree('getSelected');
+			var parentNode = $("#rolegrouptree").tree("getParent",node.target);
+			if(parentNode){
+				$("#rolegrouptree").tree("reload",parentNode.target);
+			}else{
+				$("#rolegrouptree").tree("reload",node.target);
+			}
+		}
 		
 		function deleteRoleGroup(){
 			$.messager.confirm('操作确认','确认操作?',function(r){
@@ -69,7 +79,7 @@
 				               url: appName+"/rolegroup/delete.htmls",
 				               data: {groupids:node.id},
 				               success: function(data){
-				            	    $("#rolegrouptree").tree("reload",$("#rolegrouptree").tree("getParent",node.target).target);
+				            	   refreshParentNode();
 									$.messager.alert('操作结果','操作成功');
 				                  }
 				            });

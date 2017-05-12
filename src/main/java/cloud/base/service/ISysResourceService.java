@@ -44,4 +44,10 @@ public interface ISysResourceService {
 	 */
 	String deleteSysResource(String[] ids);
 	
+	/**
+	 * @param rolecode
+	 * 		根据角色获取对应的资源
+	 * @return
+	 */
+	List findAllResourceByRoleCode(String rolecode);
 }

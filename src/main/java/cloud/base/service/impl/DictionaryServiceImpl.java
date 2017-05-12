@@ -16,7 +16,7 @@ import cloud.base.dao.SysUserMapper;
 import cloud.base.service.IDictionaryService;
 
 @Transactional
-@Service
+@Service("dictionaryserviceimpl")
 public class DictionaryServiceImpl implements IDictionaryService {
 	
 	@Autowired
@@ -25,5 +25,8 @@ public class DictionaryServiceImpl implements IDictionaryService {
 	public List getAllDictByTypecode(String typecode) {
 		return dictionarymapper.getAllDictByTypecode(typecode);
 	}
-	
+
+	public List getAllDict() {
+		return dictionarymapper.getAllDict();
+	}
 }

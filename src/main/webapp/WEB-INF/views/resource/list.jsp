@@ -8,7 +8,7 @@
 <body>
 	
 <div id="resourcelistlayout" class="easyui-layout" style="height:100%;">
-    <div data-options="region:'west',title:'用户组',split:true" style="width:20%;">
+    <div data-options="region:'west',title:'资源组',split:true" style="width:20%;">
 		<div id="resourcegrouptreepanel" class="easyui-panel" data-options="href:'<%=getServletContext().getContextPath() %>/resourcegroup/tree.htmls'">
 		</div>
     </div>
@@ -34,13 +34,13 @@
 			<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editResource()">编辑</a>
 			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteResources()">删除</a>
 		</div>
-		<table id="resourceListTable" toolbar="#resourceListToolbar" title="用户列表" style="height:90%" data-options=" url:'<%=getServletContext().getContextPath()%>/resource/search/list.htmls',idField:'userid',pagination:true">
+		<table id="resourceListTable" toolbar="#resourceListToolbar" title="资源列表" style="height:90%" data-options=" url:'<%=getServletContext().getContextPath()%>/resource/search/list.htmls',idField:'userid',pagination:true">
 			<thead>
 	            <tr>
 	                <th data-options="field:'check',checkbox:true"></th>
-	                <th data-options="field:'resourcename',width:'25%'">资源名称</th>
-	                <th data-options="field:'resourcetype',width:'25%'">资源类型</th>
-	                <th data-options="field:'resourcevalue',width:'25%'">资源值</th>
+	                <th data-options="field:'resourcename',width:'33%'">资源名称</th>
+	                <th data-options="field:'resourcetypename',width:'33%'">资源类型</th>
+	                <th data-options="field:'resourcevalue',width:'33%'">资源值</th>
 	            </tr>
 	        </thead>
 		</table>
@@ -68,6 +68,12 @@
 		}
 		
 		function editResource(){
+			var rows = $('#resourceListTable').datagrid("getSelections");
+			if(rows.length!=1){
+				$.messager.alert('提示','请选择一条记录编辑.');
+				return;
+			}
+			
 			var row = $('#resourceListTable').datagrid("getSelected");
 			$('#editResourceWindow').window({href:appName + "/resource/edit/"+row.resourcecode+".htmls"});
 			$('#editResourceWindow').window('open');

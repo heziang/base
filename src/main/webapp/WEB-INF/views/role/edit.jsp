@@ -37,7 +37,7 @@
 		               url: appName+"/role/update.htmls",
 		               data: $("#editSysRoleForm").serialize(),
 		               success: function(data){
-		            	    $('#editRoleWindow').window('close');
+		            	   closeEditRoleWindow();
 							$('#roleListTable').datagrid('reload');
 							$.messager.alert('操作结果','操作成功');
 		                  }

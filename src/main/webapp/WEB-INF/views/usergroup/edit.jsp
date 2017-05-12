@@ -44,10 +44,8 @@
 		               url: appName+"/usergroup/update.htmls",
 		               data: $("#editUserGroupForm").serialize(),
 		               success: function(data){
-		            	   var node = $('#usergrouptree').tree('getSelected');
-		            	    $("#usergrouptree").tree("reload",$("#usergrouptree").tree("getParent",node.target).target);
-		            	    
-		            	    $('#editUserGroupWindow').window('close');
+		            	    refreshParentNode();
+		            	    closeEditUserGroupWindow();
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });

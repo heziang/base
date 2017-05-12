@@ -43,10 +43,8 @@
 		               url: appName+"/resourcegroup/save.htmls",
 		               data: $("#addResourceGroupForm").serialize(),
 		               success: function(data){
-		            	    var node = $('#resourcegrouptree').tree('getSelected');
-		            	    $("#resourcegrouptree").tree("reload",$("#resourcegrouptree").tree("getParent",node.target).target);
-		            	    
-		            	    $('#addResourceGroupWindow').window('close');
+		            	    refreshParentNode();
+		            	    closeAddResourceGroupWindow();
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });

@@ -43,9 +43,8 @@
 		               url: appName+"/usergroup/save.htmls",
 		               data: $("#addUserGroupForm").serialize(),
 		               success: function(data){
-		            	    var node = $('#usergrouptree').tree('getSelected');
-		            	    $("#usergrouptree").tree("reload",$("#usergrouptree").tree("getParent",node.target).target);
-		            	    $('#addUserGroupWindow').window('close');
+		            	    refreshParentNode();
+		            	    closeAddUserGroupWindow();
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });

@@ -5,7 +5,7 @@
 		<result column="rolecode" property="rolecode" jdbcType="VARCHAR" />
 		<result column="resourcecode" property="resourcecode" jdbcType="VARCHAR" />
 	</resultMap>
-	<select id="findAllResourcesByUserId" resultType="java.lang.String" parameterType="java.lang.String">
+	<select id="findAllRolesByUserId" resultType="java.lang.String" parameterType="java.lang.String">
 		select rr.rolecode from sys_user u left join user_r_role urr on u.userid = urr.userid
 			left join sys_role rr on urr.rolecode = rr.rolecode
 			where u.userid = #{userid,jdbcType=VARCHAR}
@@ -15,4 +15,53 @@
 			left join role_r_resource rrr on rr.rolecode = rrr.rolecode
 			left join sys_resource sr on rrr.resourcecode = sr.resourcecode
 	</select>
+	<select id="findAllRoleByUserId" resultType="cloud.base.model.SysRole" parameterType="java.lang.String">
+		select sr.* from user_r_role r 
+			left join sys_role sr on r.rolecode = sr.rolecode 
+		where r.userid = #{userid,jdbcType=VARCHAR}
+	</select>
+	<select id="findAllResourceByRolecode" resultType="cloud.base.model.SysResource" parameterType="java.lang.String">
+		select sr.* from role_r_resource r 
+			left join sys_resource sr on r.resourcecode = sr.resourcecode 
+		where r.rolecode = #{rolecode,jdbcType=VARCHAR}
+	</select>
+	<select id="getAllResourcesByUserId" resultType="cloud.base.model.SysResource" parameterType="java.lang.String">
+		select rg.groupname,sre.* from sys_user su 
+			left join user_r_role urr on su.userid = urr.userid
+			left join sys_role sr on sr.rolecode = urr.rolecode
+			left join role_r_resource rrr on rrr.rolecode = sr.rolecode
+			left join sys_resource sre on sre.resourcecode = rrr.resourcecode 
+			left join resource_group rg on rg.groupcode=sre.groupcode
+		where su.userid = #{userid,jdbcType=VARCHAR}
+	</select>
+	<insert id="saveUserRole"  parameterType="cloud.base.model.UserRRole" >
+	    insert into user_r_role 
+	    	(userid, rolecode) 
+	    values 
+	    	(#{userid,jdbcType=VARCHAR},#{rolecode,jdbcType=VARCHAR});
+  	</insert>
+	<insert id="saveRoleResource"  parameterType="cloud.base.model.RoleRResource" >
+	    insert into role_r_resource
+	    	(rolecode, resourcecode) 
+	    values 
+	    	(#{rolecode,jdbcType=VARCHAR},#{resourcecode,jdbcType=VARCHAR});
+  	</insert>
+  	<delete id="deleteUserRole" parameterType="cloud.base.model.UserRRole">  
+        delete from user_r_role  
+        where userid = #{userid,jdbcType=VARCHAR}
+        and rolecode = #{rolecode,jdbcType=VARCHAR}
+	</delete>
+  	<delete id="deleteRoleResource" parameterType="cloud.base.model.RoleRResource">  
+        delete from role_r_resource  
+        where rolecode = #{rolecode,jdbcType=VARCHAR}
+        and resourcecode = #{resourcecode,jdbcType=VARCHAR}
+	</delete>
+  	<delete id="deleteRoleByUserId" parameterType="java.lang.String">  
+        delete from user_r_role 
+        where userid = #{userid,jdbcType=VARCHAR}
+	</delete>
+  	<delete id="deleteResourceByRolecode" parameterType="java.lang.String">  
+        delete from role_r_resource 
+        where rolecode = #{rolecode,jdbcType=VARCHAR}
+	</delete>
 </mapper>

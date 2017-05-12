@@ -60,7 +60,7 @@
 		               url: appName+"/user/save.htmls",
 		               data: $("#addSysUserForm").serialize(),
 		               success: function(data){
-		            	    $('#addUserWindow').window('close');
+		            	   closeAddUserWindow();
 							$('#userListTable').datagrid('reload');
 							$.messager.alert('操作结果','操作成功');
 		                  }

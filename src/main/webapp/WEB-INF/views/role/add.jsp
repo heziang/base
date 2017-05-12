@@ -36,7 +36,7 @@
 		               url: appName+"/role/save.htmls",
 		               data: $("#addSysRoleForm").serialize(),
 		               success: function(data){
-		            	    $('#addRoleWindow').window('close');
+		            	   closeAddRoleWindow();
 							$('#roleListTable').datagrid('reload');
 							$.messager.alert('操作结果','操作成功');
 		                  }

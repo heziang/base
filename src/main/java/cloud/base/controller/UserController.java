@@ -1,6 +1,8 @@
 package cloud.base.controller;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -8,15 +10,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cloud.base.model.SessionUser;
+import cloud.base.model.SysResource;
 import cloud.base.model.SysUser;
 import cloud.base.model.Userinfo;
 import cloud.base.model.VO.PageData;
@@ -86,6 +91,42 @@ public class UserController {
 	public @ResponseBody String delete(String userids){
 		sysUserService.deleteSysUser(userids.split(","));
 		return null;
+	}
+	/**
+	 * 保存角色方法
+	 */
+	@RequestMapping("/saveRole")
+	public  @ResponseBody String saveRole(ModelMap modelMap,String userid,String rolecodes){
+		String[] codeArray = rolecodes.split(",");
+		sysUserService.saveUserRole(userid, codeArray);
+		return null;
+	}
+	
+	@RequestMapping("/findResourceByUserid/{userid}")
+	public  @ResponseBody Map findResourceByUserid(ModelMap modelMap,@PathVariable("userid")String userid){
+		Map map = new LinkedHashMap();
+		List<SysResource> list = sysUserService.getAllResourcesByUserId(userid);
+		
+		for (SysResource sysResource : list) {
+			if(sysResource!=null){
+				//只处理url类型的资源
+				if("u".equals(sysResource.getResourcetype())){
+					//得到菜单的组
+					String resourcegroupname = sysResource.getGroupname();
+					//对应组的菜单集合
+					List<SysResource> meauList = null;
+					//如果集合里没有放入菜单组的信息，则生成
+					if(map.get(resourcegroupname)==null){
+						meauList = new LinkedList<SysResource>();
+					}else{
+						meauList = (List<SysResource>) map.get(resourcegroupname);
+					}
+					meauList.add(sysResource);
+					map.put(resourcegroupname, meauList);
+				}
+			}
+		}
+		return map;
 	}
 }
 

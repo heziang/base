@@ -11,6 +11,8 @@ public class SysResource {
 	private String resourcename;
 	private String resourcevalue;
 	private String resourcetype;
+	private String resourcetypename;//资源类型名称-非数据库字段
+	private String groupname;//分组名称-非数据库字段
 	private String resourceorder;
 	public String getResourcecode() {
 		return resourcecode;
@@ -48,6 +50,16 @@ public class SysResource {
 	public void setResourceorder(String resourceorder) {
 		this.resourceorder = resourceorder;
 	}
-	
-	
+	public String getResourcetypename() {
+		return resourcetypename;
+	}
+	public void setResourcetypename(String resourcetypename) {
+		this.resourcetypename = resourcetypename;
+	}
+	public String getGroupname() {
+		return groupname;
+	}
+	public void setGroupname(String groupname) {
+		this.groupname = groupname;
+	}
 }

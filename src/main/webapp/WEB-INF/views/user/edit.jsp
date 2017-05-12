@@ -55,7 +55,7 @@
 		               url: appName+"/user/update.htmls",
 		               data: $("#editSysUserForm").serialize(),
 		               success: function(data){
-		            	    $('#editUserWindow').window('close');
+		            	   closeEditUserWindow();
 							$('#userListTable').datagrid('reload');
 							$.messager.alert('操作结果','操作成功');
 		                  }

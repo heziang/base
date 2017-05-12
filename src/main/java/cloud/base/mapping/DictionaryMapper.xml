@@ -10,4 +10,9 @@
 	<select id="getAllDictByTypecode" resultType="Map" parameterType="java.lang.String">
 		select t.dcode value,t.dname text from sys_data_dictionary t where t.typecode = #{typecode,jdbcType=VARCHAR}
 	</select>
+	<select id="getAllDict" resultType="cloud.base.model.Dictionary">
+		select t.typecode,t.dcode,t.dname
+		 from sys_data_dictionary t 
+		 order by t.typecode
+	</select>
 </mapper>

@@ -3,6 +3,7 @@ package cloud.base.service;
 import java.util.List;
 import java.util.Map;
 
+import cloud.base.model.SysResource;
 import cloud.base.model.SysUser;
 import cloud.base.model.Userinfo;
 import cloud.base.model.VO.PageModel;
@@ -13,7 +14,7 @@ public interface ISysUserService {
 	 * @return
 	 * 
 	 */
-	List<String> findAllResourcesByUserId(String userid);
+	List<String> findAllRolesByUserId(String userid);
 	
 	/**
 	 * 得到用户的角色 与 权限 的对应信息 Map<权限编码,权限所需的角色编码>
@@ -21,7 +22,12 @@ public interface ISysUserService {
 	 * 
 	 */
 	List<Map<String,String>> findAllResources();
-	
+	/**
+	 * @param userid
+	 * 		根绝角色id获取所有权限
+	 * @return
+	 */
+	List getAllResourcesByUserId(String userid);
 	/**
 	 * 得到用户
 	 * @return
@@ -65,4 +71,17 @@ public interface ISysUserService {
 	 * @return 
 	 */
 	Userinfo getUserinfoById(String id);
+	/**
+	 * 		保存用户角色
+	 * @param userid  用户id
+	 * @param rolecodes  角色code数组
+	 * @return
+	 */
+	String saveUserRole(String userid,String[] rolecodes);
+	/**
+	 * @param userid
+	 * 		删除用户已有角色
+	 * @return
+	 */
+	String deleteRoleByUserId(String userid);
 }

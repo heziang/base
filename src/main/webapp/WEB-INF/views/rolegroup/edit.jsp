@@ -44,11 +44,8 @@
 		               url: appName+"/rolegroup/update.htmls",
 		               data: $("#editRoleGroupForm").serialize(),
 		               success: function(data){
-		            	   
-		            	    var node = $('#rolegrouptree').tree('getSelected');
-		            	    $("#rolegrouptree").tree("reload",$("#usergrouptree").tree("getParent",node.target).target);
-		            	    
-		            	    $('#editRoleGroupWindow').window('close');
+		            	    refreshParentNode();
+		            	    closeEditRoleGroupWindow();
 							$.messager.alert('操作结果','操作成功');
 		                  }
 		            });

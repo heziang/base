@@ -12,16 +12,19 @@ import com.alibaba.druid.util.StringUtils;
 import cloud.base.dao.SysUserMapper;
 import cloud.base.dao.UserRoleResourceMapper;
 import cloud.base.dao.UserinfoMapper;
+import cloud.base.model.SysResource;
 import cloud.base.model.SysUser;
+import cloud.base.model.UserRRole;
 import cloud.base.model.Userinfo;
 import cloud.base.model.VO.PageModel;
 import cloud.base.service.ISysUserService;
+import cloud.base.util.SecurityPasswordEncoder;
 
 @Transactional
 @Service
 public class SysUserServiceImpl implements ISysUserService {
 	@Autowired
-	private UserRoleResourceMapper roleurlresourcemapper;
+	private UserRoleResourceMapper userroleresourcemapper;
 	
 	@Autowired
 	private SysUserMapper sysusermapper;
@@ -29,12 +32,12 @@ public class SysUserServiceImpl implements ISysUserService {
 	@Autowired
 	private UserinfoMapper userinfomapper;
 	
-	public List<String> findAllResourcesByUserId(String userId) {
-		return roleurlresourcemapper.findAllResourcesByUserId(userId);
+	public List<String> findAllRolesByUserId(String userId) {
+		return userroleresourcemapper.findAllRolesByUserId(userId);
 	}
 
 	public List<Map<String, String>> findAllResources() {
-		return roleurlresourcemapper.findAllResources();
+		return userroleresourcemapper.findAllResources();
 	}
 
 	public SysUser loadUserById(String userid) {
@@ -50,6 +53,8 @@ public class SysUserServiceImpl implements ISysUserService {
 	}
 
 	public String saveSysUser(SysUser u,Userinfo userinfo) {
+		//密码加密
+		u.setPwd(SecurityPasswordEncoder.encodeMd5HashAsBase64(u.getPwd(), null));
 		sysusermapper.save(u);
 		userinfomapper.save(userinfo);
 		return u.getUserid();
@@ -73,5 +78,32 @@ public class SysUserServiceImpl implements ISysUserService {
 		pageModel.getPageData().setTotal(this.getTotals(pageModel.getConditions()));
 		pageModel.getPageData().setRows(this.search(pageModel.getConditions()));
 		return pageModel;
+	}
+
+	public String saveUserRole(String userid, String[] rolecodes) {
+		UserRRole urr = null;
+		//删除之前选择的角色
+		if(!StringUtils.isEmpty(userid)){
+			this.deleteRoleByUserId(userid);
+		}
+		//保存角色
+		for (String rolecode : rolecodes) {
+			if(!StringUtils.isEmpty(rolecode)){
+				urr = new UserRRole();
+				urr.setUserid(userid);
+				urr.setRolecode(rolecode);
+				userroleresourcemapper.saveUserRole(urr);
+			}
+		}
+		return null;
+	}
+
+	public String deleteRoleByUserId(String userid) {
+		userroleresourcemapper.deleteRoleByUserId(userid);
+		return null;
+	}
+
+	public List getAllResourcesByUserId(String userid) {
+		return userroleresourcemapper.getAllResourcesByUserId(userid);
 	}
 }
