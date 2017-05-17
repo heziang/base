@@ -42,22 +42,31 @@ public class SecurityUserDetailService implements UserDetailsService {
 		//得到sessionuser的所有角色
 		Collection<GrantedAuthority> auths=new ArrayList<GrantedAuthority>(); 
 		SysUser u = sysuserservice.loadUserById(username);
-		for (String code : sysuserservice.findAllRolesByUserId(username)) {
-			if(!StringUtils.isEmpty(code)){
-				SimpleGrantedAuthority authority = new SimpleGrantedAuthority(code);
-				List<SysResource> clist = sysresourceservice.findAllResourceByRoleCode(authority.getAuthority());
-				rslist.addAll(clist);
-				auths.add(authority);
-			}
+		
+		boolean isAble = true;
+		if("1".equals(u.getDisabled())){
+			isAble = false;
 		}
 		
-		
-		SessionUser user = new SessionUser(username, u.getPwd(), true, true, true, true, auths); 
-		
-		//得到用户的详细信息
-		user.setUserinfo(sysuserservice.getUserinfoById(username));
-		//得到用户角色对应的所有权限
-		user.setResources(rslist);
+		//如果用户状态正常，取出权限信息
+		if(isAble){
+			for (String code : sysuserservice.findAllRolesByUserId(username)) {
+				if(!StringUtils.isEmpty(code)){
+					SimpleGrantedAuthority authority = new SimpleGrantedAuthority(code);
+					List<SysResource> clist = sysresourceservice.findAllResourceByRoleCode(authority.getAuthority());
+					rslist.addAll(clist);
+					auths.add(authority);
+				}
+			}
+		}
+		SessionUser user = new SessionUser(username, u.getPwd(),isAble, true, true, true, auths); 
+		//如果用户状态正常，取出用户详细信息
+		if(isAble){
+			//得到用户的详细信息
+			user.setUserinfo(sysuserservice.getUserinfoById(username));
+			//得到用户角色对应的所有资源
+			user.setResources(rslist);
+		}
 		return user;  
 		} 
 	} 

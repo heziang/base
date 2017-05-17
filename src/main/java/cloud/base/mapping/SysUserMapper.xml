@@ -5,10 +5,11 @@
 		<id column="userid" property="userid" jdbcType="VARCHAR" />
 		<result column="groupcode" property="groupcode" jdbcType="VARCHAR" />
 		<result column="pwd" property="pwd" jdbcType="VARCHAR" />
+		<result column="disabled" property="disabled" jdbcType="VARCHAR" />
 	</resultMap>
 	<select id="loadUserById" resultMap="SysUserMap" parameterType="java.lang.String">
 		select
-		t.userid,t.pwd
+		t.userid,t.pwd,t.disabled
 		from sys_user t
 		where t.userid = #{id,jdbcType=VARCHAR}
 	</select>
@@ -34,10 +35,10 @@
 	        where t.userid = #{userid,jdbcType=VARCHAR}
 	
 	</update>
-	<delete id="delete" parameterType="String">  
-        delete from sys_user where userid in 
+	<update id="delete" parameterType="String">  
+       update sys_user   set disabled = '1'  where userid in 
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
         </foreach>
-	</delete>  
+	</update>  
 </mapper>

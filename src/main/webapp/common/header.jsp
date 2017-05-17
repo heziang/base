@@ -11,5 +11,6 @@
 	</script>
 	欢迎，
 	${SPRING_SECURITY_CONTEXT.authentication.principal.userinfo.username}
+	
 </body>
 </html>

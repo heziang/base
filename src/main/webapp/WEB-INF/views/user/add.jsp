@@ -12,13 +12,13 @@
     		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>">
     		<tr>
     			<td>用户名:</td>
-    			<td><input class="easyui-textbox" type="text" name="userid" prompt="输入用户名" required="true" data-options="validType:['username','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text"  id="adduserid" name="userid" prompt="输入用户名" required="true" data-options="validType:['username','length[0,25]']"></input></td>
     			<td>昵称:</td>
-    			<td><input class="easyui-textbox" type="text" name="nickname" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="nickname" data-options="validType:['unnormal','length[0,10]']"></input></td>
     		</tr>
     		<tr>
     			<td>密码:</td>
-    			<td><input class="easyui-passwordbox" id="pwd" name="pwd" prompt="输入密码" required="true" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-passwordbox" id="pwd" name="pwd" prompt="输入密码" required="true" data-options="validType:['unnormal','length[0,25]']"></input></td>
     			<td>确认密码:</td>
     			<td><input class="easyui-passwordbox" id="pwdconfirm" prompt="确认密码" required="true" validtype="same['pwd']"></input></td>
     		</tr>
@@ -54,6 +54,12 @@
 		});
 	
 		function saveSysUser(){
+			//检查用户名是否存在
+			if(usernameExist()){
+				$.messager.alert('操作结果','用户名已经存在');
+				$("#adduserid").focus();
+				return;
+			}
 			if($("#addSysUserForm").form('enableValidation').form('validate')){
 				$.ajax({
 		               type: "POST",
@@ -70,6 +76,21 @@
 		
 		function closeAddUserWindow(){
 			$('#addUserWindow').window('close');
+		}
+		
+		function usernameExist(){
+			 var res = false;
+           	 $.ajax({
+              type: "POST",
+              async:false,
+              url: appName+"/user/get/"+$("#adduserid").val()+".htmls",
+              success: function(data){
+		           	 if(data){
+		           		 res =  true;
+		           	 }
+                 }
+             });
+          	 return res;
 		}
 	</script>
 </body>

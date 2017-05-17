@@ -6,7 +6,7 @@ package cloud.base.model;
  * 资源分组类
  * 
  */
-public class ResourceGroup {
+public class ResourceGroup extends BaseModel{
 	private String groupcode;
 	private String groupname;
 	private String grouptype;

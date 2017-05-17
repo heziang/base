@@ -6,7 +6,7 @@ package cloud.base.model;
  * 角色分组类
  * 
  */
-public class RoleGroup {
+public class RoleGroup extends BaseModel{
 	private String groupcode;
 	private String groupname;
 	private String grouptype;

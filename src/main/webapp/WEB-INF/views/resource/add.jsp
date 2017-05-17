@@ -12,11 +12,11 @@
     		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>">
     		<tr>
     			<td>资源名称:</td>
-    			<td><input class="easyui-textbox" type="text" name="resourcename" prompt="输入资源名称" required="true" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="resourcename" prompt="输入资源名称" required="true" data-options="validType:['unnormal','length[0,25]']"></input></td>
     		</tr>
     		<tr>
     			<td>资源值:</td>
-    			<td><input class="easyui-textbox" type="text" required="true"  name="resourcevalue" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" required="true"  name="resourcevalue" data-options="validType:['unnormal','length[0,250]']"></input></td>
     		</tr>
     		<tr>
     			<td>资源类型:</td>

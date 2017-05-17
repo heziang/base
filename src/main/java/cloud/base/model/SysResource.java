@@ -5,7 +5,7 @@ package cloud.base.model;
  *	系统资源类
  *
  */
-public class SysResource {
+public class SysResource extends BaseModel{
 	private String resourcecode;
 	private String groupcode;
 	private String resourcename;

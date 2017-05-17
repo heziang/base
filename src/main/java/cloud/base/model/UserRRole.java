@@ -4,7 +4,7 @@ package cloud.base.model;
  * @author Heziang
  * 用户关联角色类
  */
-public class UserRRole {
+public class UserRRole extends BaseModel{
 	private String userid;
 	private String rolecode;
 	public String getUserid() {

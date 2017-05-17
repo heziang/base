@@ -21,7 +21,7 @@
     			<table>
     				<tr>
 		    			<td>用户名:</td>
-		    			<td><input class="easyui-textbox" type="text" name="conditions[userid]"  data-options="validType:['length[0,50]']"></input></td>
+		    			<td><input class="easyui-textbox" type="text" name="conditions[userid]"  data-options="validType:['length[0,25]']"></input></td>
 	    				<td>姓名:</td>
    						<td><input class="easyui-textbox" data-options="validType:['name','length[0,10]']" type="text" name="conditions[username]" ></input></td>
 		    			<td>创建时间:</td>
@@ -37,7 +37,7 @@
 	    <div id="userListToolbar">
 			<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addUser()">增加</a>
 			<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
-			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUsers()">删除</a>
+			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUsers()">注销</a>
 		</div>
 		<table id="userListTable" toolbar="#userListToolbar" title="用户列表" style="height:90%" data-options=" url:'<%=getServletContext().getContextPath()%>/user/search/list.htmls',idField:'userid',pagination:true">
 			<thead>

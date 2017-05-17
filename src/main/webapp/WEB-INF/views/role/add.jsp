@@ -12,7 +12,7 @@
     		<input type="hidden" name="groupcode" value="<%=request.getAttribute("groupcode") %>">
     		<tr>
     			<td>角色名称:</td>
-    			<td><input class="easyui-textbox" type="text" name="rolename" prompt="输入角色名称"  required="true" data-options="validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="rolename" prompt="输入角色名称"  required="true" data-options="validType:['unnormal','length[0,25]']"></input></td>
     		</tr>
     		<tr>
     			<td>排序:</td>

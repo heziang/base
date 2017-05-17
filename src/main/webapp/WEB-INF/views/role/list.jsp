@@ -20,7 +20,7 @@
     			<table>
     				<tr>
 		    			<td>角色名称:</td>
-		    			<td><input class="easyui-textbox" type="text" name="conditions[rolename]"  data-options="validType:['length[0,50]']"></input></td>
+		    			<td><input class="easyui-textbox" type="text" name="conditions[rolename]"  data-options="validType:['length[0,25]']"></input></td>
 		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchRoleList()">查询</a></td>
 		    		</tr>
     			</table>
@@ -94,8 +94,12 @@
 				               url: appName+"/role/delete.htmls",
 				               data: {ids:ids},
 				               success: function(data){
-									$('#roleListTable').datagrid('reload');
-									$.messager.alert('操作结果','操作成功');
+				            		if("isRef"==data){
+				            	   		$.messager.alert('操作结果','勾选的角色中有的已经被引用，无法删除');
+				            	   	}else{
+				            	   		$('#roleListTable').datagrid('reload');
+										$.messager.alert('操作结果','操作成功');
+				            	   	}
 				                  }
 				            });
 					}

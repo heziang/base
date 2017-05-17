@@ -95,7 +95,12 @@ public class ResourceController {
 			String[] idsArray = ids.split(",");
 			for (String id : idsArray) {
 				//如果资源被引用，则不允许删除
+				List list = sysresourceservice.findAllRoleByResourceCode(id);
+				if(list.size()>0){
+					return "isRef";
+				}
 			}
+			//如果资源没有被引用，删除
 			sysresourceservice.deleteSysResource(ids.split(","));
 		}
 		return null;

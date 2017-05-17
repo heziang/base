@@ -20,4 +20,6 @@ public interface UserRoleResourceMapper {
 	List<SysRole> findAllRoleByUserId(String userid);
 	List<SysResource> findAllResourceByRolecode(String rolecode);
 	List getAllResourcesByUserId(String userid);
+	List findAllRoleByResourceCode(String resourcecode);
+	List findAllUserByRoleCode(String rolecode);
 }

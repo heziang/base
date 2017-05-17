@@ -51,9 +51,13 @@
 		<if test="groupcode!='' ">  
            and t.groupcode =  #{groupcode}
         </if>
+        
+         order by t.roleorder
+        
         <if test="start!=null and rows!=null">
         	limit #{start}, #{rows}
         </if>
+       
 	</select>
 	
 	<select id="getTotal" resultType="String" parameterType="Map">

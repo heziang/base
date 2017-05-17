@@ -90,6 +90,7 @@ public class RoleController {
 			String[] idsArray = ids.split(",");
 			for (String id : idsArray) {
 				//如果角色被引用，则不允许删除
+				if(sysroleservice.findAllResourceByRoleCode(id).size()>0||sysroleservice.findAllUserByRoleCode(id).size()>0)return "isRef";
 			}
 			sysroleservice.deleteSysRole(ids.split(","));
 		}

@@ -13,6 +13,6 @@
 	<select id="getAllDict" resultType="cloud.base.model.Dictionary">
 		select t.typecode,t.dcode,t.dname
 		 from sys_data_dictionary t 
-		 order by t.typecode
+		 order by t.dorder
 	</select>
 </mapper>

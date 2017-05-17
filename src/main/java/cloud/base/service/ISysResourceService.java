@@ -50,4 +50,11 @@ public interface ISysResourceService {
 	 * @return
 	 */
 	List findAllResourceByRoleCode(String rolecode);
+	
+	/**
+	 * @param resourcecode
+	 * 		根据资源获取引用该资源的角色
+	 * @return
+	 */
+	List findAllRoleByResourceCode(String resourcecode);
 }

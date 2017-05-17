@@ -65,7 +65,8 @@ public class SysUserServiceImpl implements ISysUserService {
 		return null;
 	}
 	public String deleteSysUser(String[] userid) {
-		userinfomapper.delete(userid);
+		//不作真删
+//		userinfomapper.delete(userid);
 		sysusermapper.delete(userid);	
 		return null;
 	}

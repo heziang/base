@@ -5,7 +5,7 @@ package cloud.base.model;
  *	角色与系统资源关联类
  *
  */
-public class RoleRResource {
+public class RoleRResource extends BaseModel{
 
 	private String rolecode;
 	private String resourcecode;

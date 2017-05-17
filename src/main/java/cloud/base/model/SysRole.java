@@ -4,7 +4,7 @@ package cloud.base.model;
  * @author Heziang
  * 系统角色类
  */
-public class SysRole {
+public class SysRole extends BaseModel{
 	private String rolecode;
 	private String rolename;
 	private String groupcode;

@@ -78,8 +78,12 @@
 				               url: appName+"/resourcegroup/delete.htmls",
 				               data: {groupids:node.id},
 				               success: function(data){
-				            	    refreshParentNode();
-									$.messager.alert('操作结果','操作成功');
+					            	    if(data=='isRef'){
+					            	    	$.messager.alert('操作结果','该组下存在自组或成员记录，不能被删除');
+					            	    }else{
+					            	    	refreshParentNode();
+											$.messager.alert('操作结果','操作成功');
+					            	    }
 				                  }
 				            });
 					}else{

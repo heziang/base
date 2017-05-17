@@ -11,4 +11,5 @@ public interface IUserGroupService {
 	void delete(String[] ids);
 	UserGroup getUserGroupById(String id);
 	int groupIsHaschildren(String groupid);
+	int getUserCountByGroupId(String groupid);
 }

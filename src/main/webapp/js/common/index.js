@@ -2,7 +2,7 @@ $(document).ready(function() {
 	//请求菜单
 	$.ajax({
         type: "POST",
-        url: appName+"/user/findResourceByUserid/"+"admin"+".htmls",
+        url: appName+"/user/findUserResource.htmls",
         dataType:"json",
         success: function(data){
         	$(data).each(function(index,obj){
@@ -11,7 +11,7 @@ $(document).ready(function() {
         			var menu_group_div = $('<div></div>');
         			var menus = obj[key];
         			$(menus).each(function(num,resource){
-        				var menudiv =  $('<div onclick="index_selectMeanu(\''+resource.resourcename+'\',\''+resource.resourcevalue+'\')">'+resource.resourcename+'</div>');
+        				var menudiv =  $('<div onclick="index_selectMeanu(\''+resource.resourcename+'\',\''+resource.resourcevalue+'\')"><a>'+resource.resourcename+'</a></div>');
         				menu_group_div.append(menudiv);
         			});
         			$('#index_main_menu').accordion('add', {title: key,content: menu_group_div,selected: false});

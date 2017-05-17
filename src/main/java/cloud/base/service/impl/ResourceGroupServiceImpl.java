@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import cloud.base.dao.ResourceGroupMapper;
 import cloud.base.model.ResourceGroup;
 import cloud.base.service.IResourceGroupService;
@@ -44,5 +45,9 @@ public class ResourceGroupServiceImpl implements IResourceGroupService {
 
 	public int groupIsHaschildren(String groupid) {
 		return usergroupmapper.groupIsHaschildren(groupid);
+	}
+
+	public int getResourceCountByGroupId(String groupid) {
+		return usergroupmapper.getResourceCountByGroupId(groupid);
 	}
 }

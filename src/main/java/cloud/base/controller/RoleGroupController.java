@@ -15,6 +15,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
+import cloud.base.model.ResourceGroup;
 import cloud.base.model.RoleGroup;
 import cloud.base.model.VO.EasyUITreeVO;
 import cloud.base.service.IRoleGroupService;
@@ -30,6 +31,16 @@ public class RoleGroupController {
 	private @ResponseBody List getListByPid(String id){
  		if(StringUtils.isEmpty(id))id = "0";
 		List<RoleGroup> list = rolegroupservice.getListByPid(id);
+		
+		return package2UITreeData(list);
+	}
+	
+	/**
+	 * @param list
+	 * 		转换成easyui树要求的格式
+	 * @return
+	 */
+	private List package2UITreeData(List<RoleGroup> list){
 		List<EasyUITreeVO> volist = new LinkedList<EasyUITreeVO>();
 		for (RoleGroup userGroup : list) {
 			EasyUITreeVO vo = new EasyUITreeVO();
@@ -90,8 +101,8 @@ public class RoleGroupController {
 			String[] idsArray = groupids.split(",");
 			for (String id : idsArray) {
 				//如果有子节点，或者组里有角色记录，不允许删除
-				if(rolegroupservice.groupIsHaschildren(id)>0){
-					
+				if(rolegroupservice.groupIsHaschildren(id)>0||rolegroupservice.getRoleCountByGroupid(id)>0){
+					return "isRef";
 				}
 			}
 			rolegroupservice.delete(groupids.split(","));

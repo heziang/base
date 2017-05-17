@@ -11,6 +11,7 @@
 	<select id="getListByPid" resultType="cloud.base.model.UserGroup" parameterType="java.lang.String">
 		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from user_group t 
 		where t.pgroupcode = #{pid,jdbcType=VARCHAR}
+		order by t.gorder
 	</select>
 	<select id="getUserGroupById" resultType="cloud.base.model.UserGroup" parameterType="java.lang.String">
 		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from user_group t 
@@ -20,6 +21,11 @@
 		select count(*) 
 		from user_group t 
 		where t.pgroupcode = #{groupid,jdbcType=VARCHAR}
+	</select>
+	<select id="getUserCountByGroupId" resultType="int" parameterType="java.lang.String">
+		select count(*) 
+		from sys_user t 
+		where t.groupcode = #{groupid,jdbcType=VARCHAR}
 	</select>
 	<insert id="save" keyProperty="groupcode" parameterType="cloud.base.model.UserGroup" >
 	<!--添加记录

@@ -13,4 +13,5 @@ public interface ResourceGroupMapper {
 	void delete(String[] ids);
 	ResourceGroup getResourceGroupById(String id);
 	int groupIsHaschildren(String groupid);
+	int getResourceCountByGroupId(String groupid);
 }

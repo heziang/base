@@ -59,7 +59,7 @@
 		select
 		u.*
 		from sys_user t left JOIN  userinfo u on t.userid = u.userid
-		where 1=1
+		where t.disabled != '1'
 		<if test="userid!=null and userid!='' ">  
            and t.userid like concat(concat('%', #{userid}),'%')   
         </if>
@@ -78,7 +78,7 @@
 		select
 		count(*)
 		from sys_user t left JOIN  userinfo u on t.userid = u.userid
-		where 1=1
+		where t.disabled != '1'
 		<if test="userid!=null and userid!='' ">  
            and t.userid like concat(concat('%', #{userid}),'%')   
         </if>

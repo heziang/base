@@ -4,7 +4,7 @@ package cloud.base.model;
  * @author Heziang
  * 用户信息类
  */
-public class Userinfo {
+public class Userinfo extends BaseModel{
 	private String userid;
 	private String username;
 	private String sex;

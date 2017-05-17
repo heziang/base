@@ -1,20 +1,15 @@
 package cloud.base.controller;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
@@ -27,6 +22,7 @@ import cloud.base.model.Userinfo;
 import cloud.base.model.VO.PageData;
 import cloud.base.model.VO.PageModel;
 import cloud.base.service.ISysUserService;
+import cloud.base.util.SecurityUtil;
 
 @Controller
 @RequestMapping("/user")
@@ -68,6 +64,14 @@ public class UserController {
 		return "/user/edit";
 	}
 	
+	@RequestMapping("/get/{userid}")
+	public @ResponseBody SysUser getUserById(ModelMap modelMap,@PathVariable("userid") String userid){
+		SysUser u = sysUserService.loadUserById(userid);
+		if(u!=null){
+			u.setPwd("-");
+		}
+		return u;
+	}
 	/**
 	 * 保存方法
 	 */
@@ -102,10 +106,52 @@ public class UserController {
 		return null;
 	}
 	
+	/**
+	 * @param modelMap
+	 * @param userid
+	 * 		得到某个用户的资源map集合
+	 * @return
+	 */
 	@RequestMapping("/findResourceByUserid/{userid}")
 	public  @ResponseBody Map findResourceByUserid(ModelMap modelMap,@PathVariable("userid")String userid){
 		Map map = new LinkedHashMap();
 		List<SysResource> list = sysUserService.getAllResourcesByUserId(userid);
+		
+		for (SysResource sysResource : list) {
+			if(sysResource!=null){
+				//只处理url类型的资源
+				if("u".equals(sysResource.getResourcetype())){
+					//得到菜单的组
+					String resourcegroupname = sysResource.getGroupname();
+					//对应组的菜单集合
+					List<SysResource> meauList = null;
+					//如果集合里没有放入菜单组的信息，则生成
+					if(map.get(resourcegroupname)==null){
+						meauList = new LinkedList<SysResource>();
+					}else{
+						meauList = (List<SysResource>) map.get(resourcegroupname);
+					}
+					meauList.add(sysResource);
+					map.put(resourcegroupname, meauList);
+				}
+			}
+		}
+		return map;
+	}
+	
+	/**
+	 * @param modelMap
+	 * 		得到当前用户的资源map集合
+	 * @return
+	 */
+	@RequestMapping("/findUserResource")
+	public  @ResponseBody Map findUserResource(ModelMap modelMap){
+		Map map = new LinkedHashMap();
+		SessionUser su = SecurityUtil.getSessionUser();
+		if(su==null){
+			return map;
+		}
+		List<SysResource> list = sysUserService.getAllResourcesByUserId(su.getUsername());
 		
 		for (SysResource sysResource : list) {
 			if(sysResource!=null){

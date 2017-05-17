@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import cloud.base.dao.RoleGroupMapper;
 import cloud.base.model.RoleGroup;
 import cloud.base.service.IRoleGroupService;
@@ -44,5 +45,9 @@ public class RoleGroupServiceImpl implements IRoleGroupService {
 
 	public int groupIsHaschildren(String groupid) {
 		return usergroupmapper.groupIsHaschildren(groupid);
+	}
+
+	public int getRoleCountByGroupid(String groupid) {
+		return usergroupmapper.getRoleCountByGroupid(groupid);
 	}
 }

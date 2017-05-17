@@ -12,7 +12,7 @@
    		<table>
     		<tr>
     			<td>用户名:</td>
-    			<td><input class="easyui-textbox" type="text" name="userid" required="true" data-options="editable:false,validType:['unnormal','length[0,50]']"></input></td>
+    			<td><input class="easyui-textbox" type="text" name="userid" required="true" data-options="editable:false,validType:['unnormal','length[0,25]']"></input></td>
     			<td>昵称:</td>
     			<td><input class="easyui-textbox" type="text" name="nickname" data-options="validType:['unnormal','length[0,50]']"></input></td>
     		</tr>

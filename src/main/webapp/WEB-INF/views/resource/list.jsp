@@ -20,7 +20,7 @@
     			<table>
     				<tr>
 		    			<th>资源名称:</th>
-		    			<td><input class="easyui-textbox" type="text" name="conditions[resourcename]"  data-options="validType:['length[0,50]']"></input></td>
+		    			<td><input class="easyui-textbox" type="text" name="conditions[resourcename]"  data-options="validType:['length[0,25]']"></input></td>
 		    			<th>资源类型:</th>
 	    				<td><input class="easyui-combobox" style="width:100%;" name="conditions[resourcetype]"  data-options="textField:'text',valueField:'value',url:'<%=getServletContext().getContextPath() %>/dictionary/searchByTypecode/resourceType.htmls'"></td>
 		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchResourceList()">查询</a></td>
@@ -93,8 +93,12 @@
 				               url: appName+"/resource/delete.htmls",
 				               data: {ids:ids},
 				               success: function(data){
-									$('#resourceListTable').datagrid('reload');
-									$.messager.alert('操作结果','操作成功');
+				            	   	if("isRef"==data){
+				            	   		$.messager.alert('操作结果','勾选的资源中有的已经被引用，无法删除');
+				            	   	}else{
+				            	   		$('#resourceListTable').datagrid('reload');
+										$.messager.alert('操作结果','操作成功');
+				            	   	}
 				                  }
 				            });
 					}

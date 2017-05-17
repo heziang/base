@@ -15,6 +15,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
 import cloud.base.model.ResourceGroup;
+import cloud.base.model.UserGroup;
 import cloud.base.model.VO.EasyUITreeVO;
 import cloud.base.service.IResourceGroupService;
 
@@ -29,6 +30,15 @@ public class ResourceGroupController {
 	private @ResponseBody List getListByPid(String id){
  		if(StringUtils.isEmpty(id))id = "0";
 		List<ResourceGroup> list = resourcegroupservice.getListByPid(id);
+	
+		return package2UITreeData(list);
+	}
+	/**
+	 * @param list
+	 * 		转换成easyui树要求的格式
+	 * @return
+	 */
+	private List package2UITreeData(List<ResourceGroup> list){
 		List<EasyUITreeVO> volist = new LinkedList<EasyUITreeVO>();
 		for (ResourceGroup userGroup : list) {
 			EasyUITreeVO vo = new EasyUITreeVO();
@@ -88,9 +98,9 @@ public class ResourceGroupController {
 		if(!StringUtils.isEmpty(groupids)){
 			String[] idsArray = groupids.split(",");
 			for (String id : idsArray) {
-				//如果有子节点，或者组里有角色记录，不允许删除
-				if(resourcegroupservice.groupIsHaschildren(id)>0){
-					
+				//如果有子节点，或者组里有记录，不允许删除
+				if(resourcegroupservice.groupIsHaschildren(id)>0||resourcegroupservice.getResourceCountByGroupId(id)>0){
+					return "isRef";
 				}
 			}
 			resourcegroupservice.delete(groupids.split(","));

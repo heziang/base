@@ -1,6 +1,5 @@
 package cloud.base.controller;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -28,8 +27,19 @@ public class UserGroupController {
 	
 	@RequestMapping("/searchByParent")
 	private @ResponseBody List getListByPid(String id){
+		//id为easyui自动封装的参数
  		if(StringUtils.isEmpty(id))id = "0";
 		List<UserGroup> list = usergroupservice.getListByPid(id);
+		
+		return package2UITreeData(list);
+	}
+	
+	/**
+	 * @param list
+	 * 		转换成easyui树要求的格式
+	 * @return
+	 */
+	private List package2UITreeData(List<UserGroup> list){
 		List<EasyUITreeVO> volist = new LinkedList<EasyUITreeVO>();
 		for (UserGroup userGroup : list) {
 			EasyUITreeVO vo = new EasyUITreeVO();
@@ -41,7 +51,6 @@ public class UserGroupController {
 			}else{
 				vo.setState("closed");
 			}
-			
 			volist.add(vo);
 		}
 		return volist;
@@ -89,12 +98,11 @@ public class UserGroupController {
 		if(!StringUtils.isEmpty(groupids)){
 			String[] idsArray = groupids.split(",");
 			for (String id : idsArray) {
-				//如果有子节点，或者组里有角色记录，不允许删除
-				if(usergroupservice.groupIsHaschildren(id)>0){
-					
+				//如果有子节点，或者组里有记录，不允许删除
+				if(usergroupservice.groupIsHaschildren(id)>0||usergroupservice.getUserCountByGroupId(id)>0){
+					return "isRef";
 				}
 			}
-			
 			usergroupservice.delete(groupids.split(","));
 		}
 		return null;

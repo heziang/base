@@ -52,6 +52,18 @@ public interface ISysRoleService {
 	List<SysRole> findAllRoleByUserId(String userid);
 	/**
 	 * @param rolecode
+	 * 		根据角色获取引用该角色的用户
+	 * @return
+	 */
+	List findAllUserByRoleCode(String rolecode);
+	/**
+	 * @param rolecode
+	 * 		根据角色获取角色拥有的资源
+	 * @return
+	 */
+	List findAllResourceByRoleCode(String rolecode);
+	/**
+	 * @param rolecode
 	 * @param resourcecodes
 	 * 		保存角色分配的系统资源
 	 * @return

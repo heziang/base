@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
 import cloud.base.dao.SysResourceMapper;
 import cloud.base.dao.UserRoleResourceMapper;
 import cloud.base.model.SysResource;
@@ -63,6 +64,10 @@ public class SysResourceServiceImpl implements ISysResourceService {
 
 	public List findAllResourceByRoleCode(String rolecode) {
 		return userroleresourcemapper.findAllResourceByRolecode(rolecode);
+	}
+
+	public List findAllRoleByResourceCode(String resourcecode) {
+		return userroleresourcemapper.findAllRoleByResourceCode(resourcecode);
 	}
 
 }

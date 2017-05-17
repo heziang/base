@@ -10,7 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
+
+
 import cloud.base.dao.UserGroupMapper;
+import cloud.base.dao.UserinfoMapper;
 import cloud.base.model.UserGroup;
 import cloud.base.service.IUserGroupService;
 
@@ -44,5 +48,9 @@ public class UserGroupServiceImpl implements IUserGroupService {
 
 	public int groupIsHaschildren(String groupid) {
 		return usergroupmapper.groupIsHaschildren(groupid);
+	}
+
+	public int getUserCountByGroupId(String groupid) {
+		return usergroupmapper.getUserCountByGroupId(groupid);
 	}
 }

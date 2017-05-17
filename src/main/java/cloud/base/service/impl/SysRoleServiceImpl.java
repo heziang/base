@@ -97,4 +97,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
 		userroleresourcemapper.deleteResourceByRolecode(rolecode);
 		return null;
 	}
+
+	public List findAllUserByRoleCode(String rolecode) {
+		return userroleresourcemapper.findAllUserByRoleCode(rolecode);
+	}
+
+	public List findAllResourceByRoleCode(String rolecode) {
+		return userroleresourcemapper.findAllResourceByRolecode(rolecode);
+	}
 }

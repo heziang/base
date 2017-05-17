@@ -11,6 +11,7 @@
 	<select id="getListByPid" resultType="cloud.base.model.ResourceGroup" parameterType="java.lang.String">
 		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from resource_group t 
 		where t.pgroupcode = #{pid,jdbcType=VARCHAR}
+		order by t.gorder
 	</select>
 	<select id="getResourceGroupById" resultType="cloud.base.model.ResourceGroup" parameterType="java.lang.String">
 		select t.groupname,t.groupcode,t.pgroupcode,t.gorder,t.grouptype from resource_group t 
@@ -20,6 +21,11 @@
 		select count(*) 
 		from resource_group t 
 		where t.pgroupcode = #{groupid,jdbcType=VARCHAR}
+	</select>
+	<select id="getResourceCountByGroupId" resultType="int" parameterType="java.lang.String">
+		select count(*) 
+		from sys_resource t 
+		where t.groupcode = #{groupid,jdbcType=VARCHAR}
 	</select>
 	<insert id="save" keyProperty="groupcode" parameterType="cloud.base.model.ResourceGroup" >
 	<!--添加记录

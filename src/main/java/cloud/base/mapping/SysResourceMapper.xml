@@ -66,9 +66,13 @@
 		<if test="resourcetype!=null and resourcetype!='' ">  
            and t.resourcetype =  #{resourcetype}
         </if>
+        
+         order by t.resourceorder
+        
         <if test="start!=null and rows!=null">
         	limit #{start}, #{rows}
         </if>
+       
 	</select>
 	
 	<select id="getTotal" resultType="String" parameterType="Map">

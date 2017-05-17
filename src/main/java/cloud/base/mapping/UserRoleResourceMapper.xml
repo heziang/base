@@ -9,21 +9,33 @@
 		select rr.rolecode from sys_user u left join user_r_role urr on u.userid = urr.userid
 			left join sys_role rr on urr.rolecode = rr.rolecode
 			where u.userid = #{userid,jdbcType=VARCHAR}
+			order by rr.roleorder
 	</select>
 	<select id="findAllResources" resultType="Map">
 		select rr.rolecode,sr.resourcevalue from  sys_role rr 
 			left join role_r_resource rrr on rr.rolecode = rrr.rolecode
 			left join sys_resource sr on rrr.resourcecode = sr.resourcecode
+			order by sr.resourceorder
 	</select>
 	<select id="findAllRoleByUserId" resultType="cloud.base.model.SysRole" parameterType="java.lang.String">
 		select sr.* from user_r_role r 
 			left join sys_role sr on r.rolecode = sr.rolecode 
 		where r.userid = #{userid,jdbcType=VARCHAR}
+		order by sr.roleorder
 	</select>
 	<select id="findAllResourceByRolecode" resultType="cloud.base.model.SysResource" parameterType="java.lang.String">
 		select sr.* from role_r_resource r 
 			left join sys_resource sr on r.resourcecode = sr.resourcecode 
 		where r.rolecode = #{rolecode,jdbcType=VARCHAR}
+		order by sr.resourceorder
+	</select>
+	<select id="findAllRoleByResourceCode" resultType="String" parameterType="java.lang.String">
+		select r.rolecode from role_r_resource r 
+		where r.resourcecode = #{resourcecode,jdbcType=VARCHAR}
+	</select>
+	<select id="findAllUserByRoleCode" resultType="String" parameterType="java.lang.String">
+		select r.userid from user_r_role r 
+		where r.rolecode  = #{rolecode,jdbcType=VARCHAR}
 	</select>
 	<select id="getAllResourcesByUserId" resultType="cloud.base.model.SysResource" parameterType="java.lang.String">
 		select rg.groupname,sre.* from sys_user su 
@@ -33,6 +45,7 @@
 			left join sys_resource sre on sre.resourcecode = rrr.resourcecode 
 			left join resource_group rg on rg.groupcode=sre.groupcode
 		where su.userid = #{userid,jdbcType=VARCHAR}
+		order by sre.resourceorder
 	</select>
 	<insert id="saveUserRole"  parameterType="cloud.base.model.UserRRole" >
 	    insert into user_r_role 

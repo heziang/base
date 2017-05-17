@@ -13,4 +13,5 @@ public interface RoleGroupMapper {
 	void delete(String[] ids);
 	RoleGroup getRoleGroupById(String id);
 	int groupIsHaschildren(String groupid);
+	int getRoleCountByGroupid(String groupid);
 }
