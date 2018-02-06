@@ -84,4 +84,10 @@ public interface ISysUserService {
 	 * @return
 	 */
 	String deleteRoleByUserId(String userid);
+	/**
+	 * @param userid
+	 * 		修改密码
+	 * @return
+	 */
+	String changeUsersPassword(String userid,String password);
 }

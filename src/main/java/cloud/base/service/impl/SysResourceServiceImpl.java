@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 
+
+import cloud.base.annotation.SystemLog;
 import cloud.base.dao.SysResourceMapper;
 import cloud.base.dao.UserRoleResourceMapper;
 import cloud.base.model.SysResource;
@@ -56,7 +58,7 @@ public class SysResourceServiceImpl implements ISysResourceService {
 		sysrolemapper.update(resource);
 		return null;
 	}
-
+	@SystemLog(description="删除资源",module="资源管理")
 	public String deleteSysResource(String[] ids) {
 		sysrolemapper.delete(ids);
 		return null;

@@ -1,9 +1,14 @@
 package cloud.base.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collections;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,6 +27,11 @@ import cloud.base.model.Userinfo;
 import cloud.base.model.VO.PageData;
 import cloud.base.model.VO.PageModel;
 import cloud.base.service.ISysUserService;
+import cloud.base.util.ClassUtil;
+import cloud.base.util.ConfigUtil;
+import cloud.base.util.EmailUtil;
+import cloud.base.util.PropertiesUtil;
+import cloud.base.util.RandomUtil;
 import cloud.base.util.SecurityUtil;
 
 @Controller
@@ -77,6 +87,7 @@ public class UserController {
 	 */
 	@RequestMapping("/save")
 	public @ResponseBody String save(ModelMap modelMap,SysUser user,Userinfo userinfo){
+		userinfo.setCreatetime(new Date());
 		String id = sysUserService.saveSysUser(user,userinfo);
 		return id;
 	}
@@ -96,6 +107,25 @@ public class UserController {
 		sysUserService.deleteSysUser(userids.split(","));
 		return null;
 	}
+	/**
+	 * 重置密码
+	 */
+	@RequestMapping("/resetUsersPassword")
+	public @ResponseBody String resetUsersPassword(String userid){
+		String newpassword = RandomUtil.uuid().substring(0,4);
+		sysUserService.changeUsersPassword(userid,newpassword);
+		try {
+			//通过ClassLoader的方式得到邮件服务器的配置文件，并转成MAP，生成mail对象
+			EmailUtil mail = new EmailUtil(false,PropertiesUtil.GetAllProperties(ClassUtil.getContextClassLoader().getResource("bsproperties"+File.separator+"emailsever.properties").getFile()));
+			//发送邮件
+			mail.doSendHtmlEmail("测试邮件", "这是一封测试邮件，您的账户重置后的密码为"+newpassword, "517756157@qq.com");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return newpassword;
+	}
+	
 	/**
 	 * 保存角色方法
 	 */
@@ -152,7 +182,8 @@ public class UserController {
 			return map;
 		}
 		List<SysResource> list = sysUserService.getAllResourcesByUserId(su.getUsername());
-		
+		//反序排列，前台反序取出
+		Collections.reverse(list);
 		for (SysResource sysResource : list) {
 			if(sysResource!=null){
 				//只处理url类型的资源

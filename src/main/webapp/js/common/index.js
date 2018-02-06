@@ -1,5 +1,18 @@
 $(document).ready(function() {
-	//请求菜单
+	loadMeanu();
+	
+});
+
+//选择菜单
+function index_selectMeanu(title,url){
+	$('#index_main_panel').panel({
+	    href:appName+url,
+	    title:title
+	});
+}
+
+//请求菜单
+function loadMeanu(){
 	$.ajax({
         type: "POST",
         url: appName+"/user/findUserResource.htmls",
@@ -17,17 +30,9 @@ $(document).ready(function() {
         			$('#index_main_menu').accordion('add', {title: key,content: menu_group_div,selected: false});
         		}
         	});
+        	$('#index_main_menu').accordion('select', 0);
         }
      });
-});
-
-//选择菜单
-function index_selectMeanu(title,url){
-	$('#index_main_panel').panel({
-	    href:appName+url,
-	    title:title
-	});
 }
-
 
 

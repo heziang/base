@@ -20,9 +20,9 @@
 	    </selectKey> -->
 	<insert id="save" keyProperty="userid" parameterType="cloud.base.model.SysUser" >
 	    insert into sys_user 
-	    	(userid, groupcode, pwd) 
+	    	(userid, groupcode, pwd, disabled) 
 	    values 
-	    	(#{userid,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR});
+	    	(#{userid,jdbcType=VARCHAR},#{groupcode,jdbcType=VARCHAR},#{pwd,jdbcType=VARCHAR},'0');
   	</insert>
   	
 	<update id="update" parameterType="cloud.base.model.SysUser">

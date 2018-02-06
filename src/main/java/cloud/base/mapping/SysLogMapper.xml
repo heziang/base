@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cloud.base.dao.SysLogMapper">
+	<resultMap id="SysLogMap" type="cloud.base.model.SysLog">
+		<id column="logid" property="logid" jdbcType="VARCHAR" />
+		<result column="logtitle" property="logtitle" jdbcType="VARCHAR" />
+		<result column="logcontent" property="logcontent" jdbcType="VARCHAR" />
+		<result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+		<result column="logtype" property="logtype" jdbcType="VARCHAR" />
+	</resultMap>
+	<!--添加记录
+		生成UUID的办法
+	 <selectKey keyProperty="userid" resultType="String" order="BEFORE">
+	        select  replace(uuid(),'-','')   from dual
+	    </selectKey> -->
+	<insert id="save" keyProperty="logid" parameterType="cloud.base.model.SysLog" >
+		<selectKey keyProperty="logid" resultType="String" order="BEFORE">
+	        select  replace(uuid(),'-','')   from dual
+	    </selectKey>
+	    insert into sys_log
+	    	(logid, logtitle, logcontent, createtime, logtype) 
+	    values 
+	    	(#{logid,jdbcType=VARCHAR},#{logtitle,jdbcType=VARCHAR},
+	    	 #{logcontent,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP},#{logtype,jdbcType=VARCHAR});
+  	</insert> 
+  	
+	<insert id="saveMap" keyProperty="logid" parameterType="Map" >
+		<selectKey keyProperty="logid" resultType="String" order="BEFORE">
+	        select  replace(uuid(),'-','')   from dual
+	    </selectKey>
+	    insert into sys_log 
+	    	(logid, logtitle, logcontent, createtime, logtype) 
+	    values 
+	    	(#{logid,jdbcType=VARCHAR},#{logtitle,jdbcType=VARCHAR},
+	    	 #{logcontent,jdbcType=VARCHAR},#{createtime,jdbcType=TIMESTAMP},#{logtype,jdbcType=VARCHAR});
+  	</insert> 
+  	<select id="search" resultMap="SysLogMap" parameterType="Map">
+		select
+		t.*
+		from sys_log t
+		where 1=1
+		<if test="logtitle!=null and logtitle!='' ">  
+           and t.logtitle like concat(concat('%', #{logtitle}),'%')   
+        </if>
+		<if test="logcontent!=null and logcontent!='' ">  
+           and t.content like concat(concat('%', #{content}),'%')   
+        </if>
+         <!-- 查询条件：创建开始时间 -->
+        <if test="startDate!=null and startDate!=''">
+            and t.createtime &gt;= #{startDate}
+        </if>
+
+        <!-- 查询条件：创建结束时间 -->
+        <if test="endDate!=null and endDate!=''">
+            AND t.createtime &lt;= #{endDate}
+        </if> 
+        <if test="start!=null and rows!=null">
+        	limit #{start}, #{rows}
+        </if>
+	</select>
+	
+	<select id="getTotal" resultType="String" parameterType="Map">
+		select
+		count(*)
+		from sys_log t 
+		where 1= 1
+		<if test="logtitle!=null and logtitle!='' ">  
+           and t.logtitle like concat(concat('%', #{logtitle}),'%')   
+        </if>
+		<if test="logcontent!=null and logcontent!='' ">  
+           and t.content like concat(concat('%', #{content}),'%')   
+        </if>
+        <!-- 查询条件：创建开始时间 -->
+        <if test="startDate!=null and startDate!=''">
+            and t.createtime &gt;= #{startDate}
+        </if>
+
+        <!-- 查询条件：创建结束时间 -->
+        <if test="endDate!=null and endDate!=''">
+            AND t.createtime &lt;= #{endDate}
+        </if> 
+	</select>
+</mapper>

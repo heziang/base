@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.druid.util.StringUtils;
 
+import cloud.base.annotation.SystemLog;
 import cloud.base.dao.SysUserMapper;
 import cloud.base.dao.UserRoleResourceMapper;
 import cloud.base.dao.UserinfoMapper;
@@ -51,7 +52,9 @@ public class SysUserServiceImpl implements ISysUserService {
 	public String getTotals(Map conditions) {
 		return userinfomapper.getTotal(conditions);
 	}
-
+	
+	@SystemLog(description="新增用户",module="用户管理")
+	@Transactional
 	public String saveSysUser(SysUser u,Userinfo userinfo) {
 		//密码加密
 		u.setPwd(SecurityPasswordEncoder.encodeMd5HashAsBase64(u.getPwd(), null));
@@ -103,8 +106,17 @@ public class SysUserServiceImpl implements ISysUserService {
 		userroleresourcemapper.deleteRoleByUserId(userid);
 		return null;
 	}
-
+    @SystemLog(description="查询菜单",module="系统")
 	public List getAllResourcesByUserId(String userid) {
 		return userroleresourcemapper.getAllResourcesByUserId(userid);
+	}
+	
+	public String changeUsersPassword(String userid,String password) {
+		password = SecurityPasswordEncoder.encodeMd5HashAsBase64(password, null);
+		SysUser user= new SysUser();
+		user.setUserid(userid);
+		user.setPwd(password);
+		sysusermapper.update(user);
+		return "";
 	}
 }

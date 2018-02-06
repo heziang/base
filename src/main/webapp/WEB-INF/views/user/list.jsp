@@ -38,16 +38,16 @@
 			<a class="easyui-linkbutton" iconCls="icon-add" plain="true" onclick="addUser()">增加</a>
 			<a class="easyui-linkbutton" iconCls="icon-edit" plain="true" onclick="editUser()">编辑</a>
 			<a class="easyui-linkbutton" iconCls="icon-remove" plain="true" onclick="deleteUsers()">注销</a>
+			<a class="easyui-linkbutton" iconCls="icon-reload" plain="true" onclick="resetUsersPassword()">重置密码</a>
 		</div>
 		<table id="userListTable" toolbar="#userListToolbar" title="用户列表" style="height:90%" data-options=" url:'<%=getServletContext().getContextPath()%>/user/search/list.htmls',idField:'userid',pagination:true">
 			<thead>
 	            <tr>
 	                <th data-options="field:'check',checkbox:true"></th>
-	                <th data-options="field:'userid',width:'25%'">用户名</th>
-	                <th data-options="field:'username',width:'10%'">姓名</th>
-	                <th data-options="field:'mobilephone',width:'25%'">手机</th>
-	                <th data-options="field:'telephone',width:'24%'">电话</th>
-	                <th data-options="field:'_operate',width:'15%',align:'center',formatter:formatOperRole">分配角色</th>
+	                <th data-options="field:'userid',width:'15%'">用户名</th>
+	                <th data-options="field:'username',width:'15%'">姓名</th>
+	                <th data-options="field:'mobilephone',width:'15%'">手机</th>
+	                <th data-options="field:'_operate',width:'55%',align:'center',formatter:formatOper">操作</th>
 	            </tr>
 	        </thead>
 		</table>
@@ -113,6 +113,26 @@
 			}
 		}
 		
+		function resetUsersPassword(userid){
+			if(userid.length>0){
+				$.messager.confirm('操作确认','确认操作?',function(r){
+					if (r){
+						$.ajax({
+				               type: "POST",
+				               url: appName+"/user/resetUsersPassword.htmls",
+				               data: {userid:userid},
+				               success: function(data){
+									$('#userListTable').datagrid('reload');
+									$.messager.alert('操作结果','操作成功,新密码已经通过邮件发送给对应的联系人！');
+				                  }
+				            });
+					}
+				});
+			}else{
+				$.messager.alert('提示','未获取到用户id');
+			}
+		}
+		
 		function searchUserList(){
 			$('#userListTable').datagrid('load',$("#searchSysUserForm").serializeObject());
 		}
@@ -122,8 +142,9 @@
 			$('#userListTable').datagrid('load',$("#searchSysUserForm").serializeObject());
 		}
 		
-		function formatOperRole(val,row,index){
-			return '<a class="icon-man" title="分配角色" onclick="grantRole(\''+row.userid+'\')">&nbsp;&nbsp;&nbsp;&nbsp;</a>';
+		function formatOper(val,row,index){
+			var operString = '<a class="icon-man" title="分配角色" onclick="grantRole(\''+row.userid+'\')">&nbsp;&nbsp;&nbsp;&nbsp;</a>' + '<a class="icon-reload" title="重置密码" onclick="resetUsersPassword(\''+row.userid+'\')">&nbsp;&nbsp;&nbsp;&nbsp;</a>';
+			return operString;
 		}
 		
 		function grantRole(userid){

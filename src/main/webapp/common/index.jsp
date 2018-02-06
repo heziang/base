@@ -18,6 +18,7 @@
 		</div>
 		<div data-options="region:'center'">
 			<div id="index_main_panel" class="easyui-panel"  style="width:100%;height:100%;background:#fafafa;" data-options="">
+				<p>欢迎</p>
 			</div>
 		</div>
 	</div>

@@ -1,5 +1,7 @@
 package cloud.base.model;
 
+import java.util.Date;
+
 /**
  * @author Heziang
  * 用户信息类
@@ -13,6 +15,7 @@ public class Userinfo extends BaseModel{
 	private String mobilephone;
 	private String telephone;
 	private String nickname;
+	private Date createtime;
 	public String getUserid() {
 		return userid;
 	}
@@ -61,5 +64,10 @@ public class Userinfo extends BaseModel{
 	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
-
+	public Date getCreatetime() {
+		return createtime;
+	}
+	public void setCreatetime(Date createtime) {
+		this.createtime = createtime;
+	}
 }
