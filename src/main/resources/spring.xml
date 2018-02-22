@@ -11,12 +11,15 @@
 	<bean id="springUtil" class="cloud.base.util.SpringUtil"/>
 	<!--引入配置属性文件 -->
 	<context:property-placeholder location="classpath:config.properties" />
-	<!-- 打开aop -->
-	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
 	<!--自动扫描含有@Service将其注入为bean -->
 	<context:component-scan base-package="cloud.base.service" />
+	
+	<!-- 打开aop -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	<!-- 自定义日志切片类 -->
 	<bean id="loginterceptor" class="cloud.base.interceptor.LogInterceptor"/>
 
- 
+ 	
     
 </beans>

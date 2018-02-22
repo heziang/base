@@ -7,7 +7,7 @@ id="schedule-console" version="3.0">
   <display-name>Archetype Created Web Application</display-name>
   <context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:spring.xml,classpath:spring-mybatis.xml,classpath:securityConfig.xml</param-value>
+		<param-value>classpath:spring.xml,classpath:spring-mybatis.xml,classpath:securityConfig.xml,classpath:cxf-config.xml</param-value>
 	</context-param>
 	 <!-- Spring Secutiry3.1的过滤器链配置 -->  
     <filter>  
@@ -61,7 +61,20 @@ id="schedule-console" version="3.0">
 		<servlet-name>rest</servlet-name>
 		<url-pattern>*.htmls</url-pattern>
 	</servlet-mapping>
-
+	<!-- cxf -->
+	<!-- 配置cxfservlet -->  
+    <servlet>
+          <servlet-name>CXFServlet</servlet-name>
+          <display-name>CXFServlet</display-name>
+          <servlet-class>
+                 org.apache.cxf.transport.servlet.CXFServlet
+          </servlet-class>
+          <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+           <servlet-name>CXFServlet</servlet-name>
+           <url-pattern>/webservice/*</url-pattern>
+               </servlet-mapping> 
 	<!-- 配置session超时时间，单位分钟 -->
 	<session-config>
 		<session-timeout>30</session-timeout>

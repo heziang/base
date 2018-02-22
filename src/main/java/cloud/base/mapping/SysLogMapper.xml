@@ -43,7 +43,7 @@
            and t.logtitle like concat(concat('%', #{logtitle}),'%')   
         </if>
 		<if test="logcontent!=null and logcontent!='' ">  
-           and t.content like concat(concat('%', #{content}),'%')   
+           and t.logcontent like concat(concat('%', #{content}),'%')   
         </if>
          <!-- 查询条件：创建开始时间 -->
         <if test="startDate!=null and startDate!=''">
@@ -68,7 +68,7 @@
            and t.logtitle like concat(concat('%', #{logtitle}),'%')   
         </if>
 		<if test="logcontent!=null and logcontent!='' ">  
-           and t.content like concat(concat('%', #{content}),'%')   
+           and t.logcontent like concat(concat('%', #{content}),'%')   
         </if>
         <!-- 查询条件：创建开始时间 -->
         <if test="startDate!=null and startDate!=''">

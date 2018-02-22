@@ -22,7 +22,7 @@
 		    			<td><input class="easyui-datebox" type="text" name="conditions[startDate]"  data-options="validType:['date']"></input></td>
 		    			<td>至</td>
 		    			<td><input class="easyui-datebox" type="text" name="conditions[endDate]"   data-options="validType:['date']"></input></td>
-		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchUserList()">查询</a></td>
+		    			<td><a class="easyui-linkbutton" iconCls="icon-search" plain="true" onclick="searchLogList()">查询</a></td>
 		    		</tr>
     			</table>
     		</form>
@@ -44,7 +44,7 @@
 			$('#logListTable').datagrid();
 		});
 		
-		function searchUserList(){
+		function searchLogList(){
 			$('#logListTable').datagrid('load',$("#searchSysLogForm").serializeObject());
 		}
 		
